@@ -73,3 +73,6 @@ def verifyFile(fileName, fileType):
     else:
         return False
 
+def verifyFileToStr():
+    return "It's passing the information in correctly"
+
