@@ -73,6 +73,23 @@ def verifyFile(fileName, fileType):
     else:
         return False
 
-def verifyFileToStr():
-    return "It's passing the information in correctly"
+def verifyFileToStr(fileName, fileType):
+    print("Verifying " + fileName + " as filetype " + fileType)
+    if verifyFile(fileName, fileType) == True:
+        return "The file is valid!"
+    else:
+        fileDict = parseCSV(fileName)
+        msg = ""
+        if fileDict == None:
+            msg += "There are empty cells. \n"
+            return msg
+        if checkLabels(fileDict, fileType) == False:
+            msg += "The labels are incorrect. \n"
+        if checkDates(fileDict) == False:
+            msg += "There are improperly formatted dates."
+        if checkIds(fileDict) == False:
+            msg += "There are invalid CoIDs."
+        return msg
+        
+
 

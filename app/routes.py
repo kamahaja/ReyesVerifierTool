@@ -18,12 +18,13 @@ def verify():
             flash('No file part')
             return render_template('index.html')
         file = request.files['csvFileInput']
+        filetype = request.form.get("selectedHidden", None)
         # if user does not select file, browser also
         # submit an empty part without filename
-        if file.filename == '':
-            flash('No selected file')
+        if file.filename == '' or filetype == None or filetype == "":
+            flash('Invalid file or type!')
             return render_template('index.html')
         f = request.files['csvFileInput']
         f.save(secure_filename(f.filename))
-        return render_template('index.html', output = vdt.verifyFileToStr())
+        return render_template('index.html', output = vdt.verifyFileToStr(f.filename, filetype))
         #return f.filename + ' uploaded successfully'

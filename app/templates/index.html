@@ -109,18 +109,19 @@
                     <div class="input-group mb-3">
                         <!-- Dropdown menu -->
                         <button id="selected" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File Type</button>
-                        <div class="dropdown-menu">
-                            <a class="dropdown-item" href="#" onclick="setNumArticles(5);">Inventory</a>
-                            <a class="dropdown-item" href="#" onclick="setNumArticles(10);">Sale</a>
-                            <a class="dropdown-item" href="#" onclick="setNumArticles(20);">Payroll</a>
-                            <a class="dropdown-item" href="#" onclick="setNumArticles(40);">Static Percentages</a>
+                        <input type = "hidden" name = "selectedHidden" id = "selectedHidden" value = "">
+                        <div class="dropdown-menu" name = "types">
+                            <a class="dropdown-item" href="#" >Inventory</a>
+                            <a class="dropdown-item" href="#" >Sale</a>
+                            <a class="dropdown-item" href="#" >Payroll</a>
+                            <a class="dropdown-item" href="#" >Static Percentages</a>
                         </div>
                         <div class="custom-file">
                             <input type="file" accept=".csv" class="custom-file-input" id="csvFileInput" name = "csvFileInput" aria-describedby="inputGroupFileAddon01">
                             <label class="custom-file-label" for="csvFileInput">Choose File</label>
                         </div>
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="submit" data-toggle="" aria-haspopup="" aria-expanded="false">VERIFY</button>
+                        <div class="input-group-append">    <!-- Passes in the request object to upload() -->
+                            <button class="btn btn-primary" type="submit" onclick = "upload('{{ request.url }}');" data-toggle="" aria-haspopup="" aria-expanded="false">VERIFY</button>
                         </div>
                     </div>
                     <script>
@@ -134,9 +135,20 @@
 
                         $('.dropdown-menu a').click(function() {
                             $('#selected').text($(this).text());
+                            $('input#selectedHidden').val($(this).text());
                         });
+
+                        
+
                     </script>
                 </form>
+                <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="false"></span>
+                    Uploading...
+                </button>
+        
+                <button type="button" id="cancel_btn" class="btn btn-secondary d-none">Cancel upload</button>
+                
                 <p> Select a file to verify, then choose the file type out of the dropdown menu. Press verify, and we'll handle everything else for you! </p>
                 
                 {% with messages = get_flashed_messages() %}
