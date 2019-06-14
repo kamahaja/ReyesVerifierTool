@@ -1,13 +1,26 @@
 from app import app
 from app import ValidatorTest as vdt
-from flask import render_template, request, flash, redirect
+from flask import render_template, request, flash, redirect, make_response, jsonify
 from werkzeug.utils import secure_filename
 
 #view functions go here
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods = ["GET", "POST"])
+@app.route('/index', methods = ["GET", "POST"])
 def index():
+    if request.method == "POST":
+
+        file = request.files["file"]
+
+        print("File uploaded")
+        print(file)
+
+        filename = secure_filename(file.filename)
+
+        res = make_response(jsonify({"message": filename + " uploaded"}), 200)
+
+        return res
+        
     return render_template('index.html')
 
 
