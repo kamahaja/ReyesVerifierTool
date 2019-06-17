@@ -94,6 +94,176 @@ class Validator:
         print("Costs are verified")
         return True
 
+    def checkShrinkageQty(self, dict):
+        print("Checking Shrinkage quantities")
+        for index, qty in enumerate(dict["SHRINKAGE_QTY"]):
+            if self.isdigit(qty) == False or qty > 0:
+                self.message += "Invalid shrinkage quantity on row" + str(index + 2) + ": " + qty + "<br>"
+                return False
+
+        print("Shrinkage quantities are verified")
+        return True
+
+    def checkShrinkageAmt(self, dict):
+        print("Checking Shrinkage amounts")
+        for index, amt in enumerate(dict["SHRINKAGE_AMT"]):
+            if self.is_number(amt) == False or qty > 0:
+                self.message += "Invalid shrinkage amount on row" + str(index + 2) + ": " + amt + "<br>"
+                return False
+
+        print("Shrinkage amounts are verified")
+        return True
+
+    def checkBreakageQty(self, dict):
+        print("Checking Breakage quantities")
+        for index, qty in enumerate(dict["BREAKAGE_QTY"]):
+            if self.isdigit(qty) == False or qty > 0:
+                self.message += "Invalid breakage quantity on row" + str(index + 2) + ": " + qty + "<br>"
+                return False
+
+        print("Breakage quantities are verified")
+        return True
+
+    def checkBreakageAmt(self, dict):
+        print("Checking Breakage amounts")
+        for index, amt in enumerate(dict["BREAKAGE_AMT"]):
+            if self.is_number(amt) == False or qty > 0:
+                self.message += "Invalid breakage amount on row" + str(index + 2) + ": " + amt + "<br>"
+                return False
+
+        print("Breakage amounts are verified")
+        return True
+
+    def checkOverageQty(self, dict):
+        print("Checking Overage quantities")
+        for index, qty in enumerate(dict["OVERAGE_QTY"]):
+            if self.isdigit(qty) == False or qty > 0:
+                self.message += "Invalid overage quantity on row" + str(index + 2) + ": " + qty + "<br>"
+                return False
+
+        print("Overage quantities are verified")
+        return True
+
+    def checkOverageAmt(self, dict):
+        print("Checking Overage amounts")
+        for index, amt in enumerate(dict["OVERAGE_AMT"]):
+            if self.is_number(amt) == False or qty > 0:
+                self.message += "Invalid overage amount on row" + str(index + 2) + ": " + amt + "<br>"
+                return False
+
+        print("Overage amounts are verified")
+        return True
+
+    def checkProdHrs(self, dict):
+        print("Checking Prod hours")
+        for index, hrs in enumerate(dict["ProdHrs"]):
+            if self.is_number(hrs) == False or hrs < 0:
+                self.message += "Invalid prod hours on row" + str(index + 2) + ": " + hrs + "<br>"
+                return False
+
+        print("Prod hours are verified")
+        return True
+
+    def checkOTHrs(self, dict):
+        print("Checking OT hours")
+        for index, hrs in enumerate(dict["OTHrs"]):
+            if self.is_number(hrs) == False or hrs < 0:
+                self.message += "Invalid OT hours on row" + str(index + 2) + ": " + hrs + "<br>"
+                return False
+
+        print("OT hours are verified")
+        return True
+
+    def checkProdDollars(self, dict):
+        print("Checking Prod dollars")
+        for index, dollars in enumerate(dict["ProdDollars"]):
+            if self.is_number(dollars) == False or dollars < 0:
+                self.message += "Invalid Prod dollars on row" + str(index + 2) + ": " + dollars + "<br>"
+                return False
+
+        print("Prod dollars are verified")
+        return True
+
+    def checkHeadcount(self, dict):
+        print("Checking Headcount")
+        for index, count in enumerate(dict["Headcount"]):
+            if self.isdigit(count) == False or count < 0:
+                self.message += "Invalid Headcount on row" + str(index + 2) + ": " + count + "<br>"
+                return False
+
+        print("Headcounts are verified")
+        return True
+    
+    def checkCes(self,dict):
+        print("Checking Ces")
+        for index, ces in enumerate(dict["Ces"]):
+            if self.is_number(ces) == False or ces < 0:
+                self.message += "Invalid Ces on row" + str(index + 2) + ": " + ces + "<br>"
+                return False
+
+        print("Ces are verified")
+        return True
+
+    def checkStops(self, dict):
+        print("Checking Stops")
+        for index, stop in enumerate(dict["Stops"]):
+            if self.isdigit(stop) == False or stop < 0:
+                self.message += "Invalid Stops on row" + str(index + 2) + ": " + stop + "<br>"
+                return False
+
+        print("Stops are verified")
+        return True
+
+    def checkGPDollars(self,dict):
+        print("Checking GP Dollars")
+        for index, dollars in enumerate(dict["GP Dollars"]):
+            if self.is_number(dollars) == False or dollars < 0:
+                self.message += "Invalid GP Dollars on row" + str(index + 2) + ": " + dollars + "<br>"
+                return False
+
+        print("GP Dollars are verified")
+        return True    
+
+    def checkSBT(self,dict):
+        print("Checking SBT")
+        for index, sbt in enumerate(dict["SBT"]):
+            if sbt[-1] != "%" and self.is_number(sbt[:-1]) == False: 
+                self.message += "Invalid SBT on row" + str(index + 2) + ": " + sbt + "<br>"
+                return False
+
+        print("SBT are verified")
+        return True  
+
+    def checkRET(self,dict):
+        print("Checking RET")
+        for index, ret in enumerate(dict["RET"]):
+            if ret[-1] != "%" and self.is_number(ret[:-1]) == False: 
+                self.message += "Invalid RET on row" + str(index + 2) + ": " + ret + "<br>"
+                return False
+
+        print("RET are verified")
+        return True
+
+    def checkUNS(self,dict):
+        print("Checking UNS")
+        for index, uns in enumerate(dict["UNS"]):
+            if uns[-1] != "%" and self.is_number(uns[:-1]) == False: 
+                self.message += "Invalid UNS on row" + str(index + 2) + ": " + uns + "<br>"
+                return False
+
+        print("UNS are verified")
+        return True
+    
+    def checkSPE(self,dict):
+        print("Checking SPE")
+        for index, spe in enumerate(dict["SPE"]):
+            if spe[-1] != "%" and self.is_number(spe[:-1]) == False: 
+                self.message += "Invalid SPE on row" + str(index + 2) + ": " + spe + "<br>"
+                return False
+
+        print("SPE are verified")
+        return True
+
     def verifyFile(self):
         fileDict = self.parseCSV()
         
@@ -105,14 +275,77 @@ class Validator:
         areDatesValid = self.checkDates(fileDict)
         areIDsValid = self.checkIds(fileDict)
         areCostsValid = self.checkCosts(fileDict)
+        if(self.fileType.lower() == "inventory"):
+            areShrinkageQtysValid = self.checkShrinkageQty(fileDict)
+            areShrinkageAmtsValid = self.checkShrinkageAmt(fileDict)
+            areBreakageQtysValid = self.checkBreakageQty(fileDict)
+            areBreakageAmtsValid = self.checkBreakageAmt(fileDict)
+            areOverageQtysValid = self.checkOverageQty(fileDict)
+            areOverageAmtsValid = self.checkOverageAmt(fileDict)
+            if(areLabelsValid 
+            and areDatesValid 
+            and areIDsValid 
+            and areCostsValid 
+            and areShrinkageAmtsValid 
+            and areShrinkageQtysValid
+            and areBreakageAmtsValid
+            and areBreakageQtysValid
+            and areOverageAmtsValid
+            and areOverageQtysValid):
+                return True
+            else:
+                return False
 
-        if (areLabelsValid 
-        and areDatesValid  
-        and areIDsValid
-        and areCostsValid):
-            return True
-        else:
-            return False
+        if(self.fileType.lower() == "sales"):
+            areCesValid = self.checkCes(fileDict)
+            areStopsValid = self.checkStops(fileDict)
+            areGPDollarsValid = self.checkGPDollars(fileDict)
+            if(areLabelsValid 
+            and areDatesValid 
+            and areIDsValid 
+            and areCostsValid 
+            and areCesValid 
+            and areStopsValid 
+            and areGPDollarsValid):
+                return True
+            else:
+                return False
+
+        if(self.fileType.lower() == "payroll"):
+            areProdHrsValid = self.checkProdHrs(fileDict)
+            areOTHrsValid = self.checkOTHrs(fileDict)
+            areProdDollarsValid = self.checkProdDollars(fileDict)
+            areHeadcountsValid = self.checkHeadcount(fileDict)
+            if(areLabelsValid 
+            and areDatesValid 
+            and areIDsValid 
+            and areCostsValid 
+            and areProdHrsValid 
+            and areOTHrsValid 
+            and areProdDollarsValid 
+            and areHeadcountsValid):
+                return True
+            else:
+                return False
+
+        if(self.fileType.lower() == "static percentages"):
+            areSBTValid = self.checkSBT(fileDict)
+            areRETValid = self.checkRET(fileDict)
+            areUNSValid = self.checkUNS(fileDict)
+            areSPEValid = self.checkSPE(fileDict)
+            if(areLabelsValid 
+            and areDatesValid 
+            and areIDsValid 
+            and areCostsValid 
+            and areSBTValid 
+            and areSPEValid 
+            and areRETValid 
+            and areUNSValid):
+                return True
+            else:
+                return False
+
+        
 
     def verifyFileToStr(self):
         print("Verifying " + self.fileName + " as filetype " + self.fileType)
