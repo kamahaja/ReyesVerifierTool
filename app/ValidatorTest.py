@@ -62,6 +62,7 @@ class Validator:
         print("Dates are verified")
         return True
 
+    #checks if the input has any numbers
     def hasNumber(self, inputString):
         return any(char.isdigit() for char in inputString)
 
@@ -75,6 +76,7 @@ class Validator:
         print("IDs are verified.")
         return True
 
+    #checks that the input can be converted to float (all numbers)
     def is_number(self, s):
         try:
             float(s)
