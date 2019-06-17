@@ -157,7 +157,7 @@ class Validator:
     def checkProdHrs(self, dict):
         print("Checking Prod hours")
         for index, hrs in enumerate(dict["ProdHrs"]):
-            if self.is_number(hrs) == False or hrs < 0:
+            if self.is_number(hrs) == False or float(hrs) < 0:
                 self.message += "Invalid prod hours on row" + str(index + 2) + ": " + hrs + "<br>"
                 return False
 
@@ -167,7 +167,7 @@ class Validator:
     def checkOTHrs(self, dict):
         print("Checking OT hours")
         for index, hrs in enumerate(dict["OTHrs"]):
-            if self.is_number(hrs) == False or hrs < 0:
+            if self.is_number(hrs) == False or float(hrs) < 0:
                 self.message += "Invalid OT hours on row" + str(index + 2) + ": " + hrs + "<br>"
                 return False
 
@@ -177,7 +177,7 @@ class Validator:
     def checkProdDollars(self, dict):
         print("Checking Prod dollars")
         for index, dollars in enumerate(dict["ProdDollars"]):
-            if self.is_number(dollars) == False or dollars < 0:
+            if self.is_number(dollars) == False or float(dollars) < 0:
                 self.message += "Invalid Prod dollars on row" + str(index + 2) + ": " + dollars + "<br>"
                 return False
 
@@ -187,7 +187,7 @@ class Validator:
     def checkHeadcount(self, dict):
         print("Checking Headcount")
         for index, count in enumerate(dict["Headcount"]):
-            if self.isdigit(count) == False or count < 0:
+            if self.is_number(count) == False or float(count) < 0:
                 self.message += "Invalid Headcount on row" + str(index + 2) + ": " + count + "<br>"
                 return False
 
@@ -197,7 +197,7 @@ class Validator:
     def checkCes(self,dict):
         print("Checking Ces")
         for index, ces in enumerate(dict["Ces"]):
-            if self.is_number(ces) == False or ces < 0:
+            if self.is_number(ces) == False or float(ces) < 0:
                 self.message += "Invalid Ces on row" + str(index + 2) + ": " + ces + "<br>"
                 return False
 
@@ -207,7 +207,7 @@ class Validator:
     def checkStops(self, dict):
         print("Checking Stops")
         for index, stop in enumerate(dict["Stops"]):
-            if self.isdigit(stop) == False or stop < 0:
+            if self.isdigit(stop) == False or float(stop) < 0:
                 self.message += "Invalid Stops on row" + str(index + 2) + ": " + stop + "<br>"
                 return False
 
@@ -217,7 +217,7 @@ class Validator:
     def checkGPDollars(self,dict):
         print("Checking GP Dollars")
         for index, dollars in enumerate(dict["GP Dollars"]):
-            if self.is_number(dollars) == False or dollars < 0:
+            if self.is_number(dollars) == False or float(dollars) < 0:
                 self.message += "Invalid GP Dollars on row" + str(index + 2) + ": " + dollars + "<br>"
                 return False
 
