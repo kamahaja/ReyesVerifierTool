@@ -16,14 +16,18 @@ def parseCSV(filename):
     return dict
 
 def checkLabels(dict, fileType):
+    areLabelsCorrect = False
     if (fileType.lower() == "inventory"):
-        return list(dict.keys()) == INVENTORY_LABELS
+        areLabelsCorrect = list(dict.keys()) == INVENTORY_LABELS
     elif (fileType.lower() == "sales"):
-        return list(dict.keys()) == SALES_LABELS
+        areLabelsCorrect = list(dict.keys()) == SALES_LABELS
     elif (fileType.lower() == "payroll"):
-        return list(dict.keys()) == PAYROLL_LABELS
+        areLabelsCorrect = list(dict.keys()) == PAYROLL_LABELS
     else:
-        return list(dict.keys()) == STATIC_PERCENTAGES_LABELS
+        areLabelsCorrect = list(dict.keys()) == STATIC_PERCENTAGES_LABELS
+
+    print("Labels are verified: " + str(areLabelsCorrect))
+    return areLabelsCorrect
 
 def validateDateFormat(date_text):
     try:
@@ -34,30 +38,35 @@ def validateDateFormat(date_text):
         #raise ValueError("Incorrect data format, should be MM-DD-YYYY")
 
 def checkDates(dict):
+    print("Checking dates")
     for date in dict["Date"]:
         if validateDateFormat(date) == False:
             return False
-        
+    
+    print("Dates are verified")
     return True
 
 def hasNumber(inputString):
     return any(char.isdigit() for char in inputString)
 
 def checkIds(dict):
+    print("Checking ids")
     for index, company in enumerate(dict["CoID"]):
         if hasNumber(company) or len(company) < 3:
             print("Invalid company id on row " + str(index + 2) + ": " + company)
             return False
-        
+    
+    print("IDs are verified.")
     return True
 
 def checkCosts(dict):
+    print("Checking costs")
     for index, cost in enumerate(dict["CostCtr"]):
         if cost.isdigit() == False or len(cost) < 2:
             print("Invalid cost on row " + str(index + 2) + ": " + cost)
             return False
         
-        
+    print("Costs are verified")
     return True
 
 def verifyFile(fileName, fileType):
@@ -68,7 +77,8 @@ def verifyFile(fileName, fileType):
     
     if (checkLabels(fileDict, fileType) == True 
     and checkDates(fileDict) == True  
-    and checkIds(fileDict) == True):
+    and checkIds(fileDict) == True
+    and checkCosts(fileDict) == True):
         return True
     else:
         return False
@@ -89,7 +99,8 @@ def verifyFileToStr(fileName, fileType):
             msg += "There are improperly formatted dates."
         if checkIds(fileDict) == False:
             msg += "There are invalid CoIDs."
+        if checkCosts(fileDict) == False:
+            msg += "There are invalid costs"
         return msg
         
-
 
