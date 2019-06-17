@@ -26,7 +26,7 @@ class Validator:
         areLabelsCorrect = False
         if (self.fileType.lower() == "inventory"):
             areLabelsCorrect = list(dict.keys()) == self.INVENTORY_LABELS
-            if areLabelsCorrect == False:
+            if areLabelsCorrect == False:   
                 self.message += "The labels do not match up with inventory labels."
         elif (self.fileType.lower() == "sales"):
             areLabelsCorrect = list(dict.keys()) == self.SALES_LABELS
@@ -36,7 +36,7 @@ class Validator:
             areLabelsCorrect = list(dict.keys()) == self.PAYROLL_LABELS
             if areLabelsCorrect == False:
                 self.message += "The labels do not match up with payroll labels."
-        else:
+        elif (self.fileType.lower() == "static percentages"):
             areLabelsCorrect = list(dict.keys()) == self.STATIC_PERCENTAGES_LABELS
             if areLabelsCorrect == False:
                 self.message += "The labels do not match up with static percentages labels."
@@ -63,7 +63,11 @@ class Validator:
         return True
 
     def hasNumber(self, inputString):
-        return any(char.isdigit() for char in inputString)
+        try:
+            float(inputString)
+            return True
+        except ValueError:
+            return False
 
     def checkIds(self, dict):
         print("Checking ids")
@@ -91,7 +95,10 @@ class Validator:
         if fileDict == None:
             return False
         
-        if (self.checkLabels(fileDict) == True 
+        #add all the messages
+        areLabelsValid = self.checkLabels(fileDict)
+
+        if (areLabelsValid 
         and self.checkDates(fileDict) == True  
         and self.checkIds(fileDict) == True
         and self.checkCosts(fileDict) == True):
@@ -104,6 +111,6 @@ class Validator:
         if self.verifyFile() == True:
             return self.fileName + " is valid!"
         else:
-            return self.message
+            return self.fileName + ": " + self.message
         
 
