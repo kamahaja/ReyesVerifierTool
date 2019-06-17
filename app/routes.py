@@ -32,8 +32,10 @@ def verify():
         filetype = request.form.get("selectedHidden", None)
         f = request.files['csvFileInput']
         f.save(secure_filename(f.filename))
+       
+        verifier = vdt.Validator(f.filename, filetype)
 
-        flash(vdt.verifyFileToStr(f.filename, filetype))
+        flash(verifier.verifyFileToStr())
 
         return redirect(url_for('.index'))
         #return f.filename + ' uploaded successfully'
