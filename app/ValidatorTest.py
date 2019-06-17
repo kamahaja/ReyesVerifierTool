@@ -76,10 +76,10 @@ def verifyFile(fileName, fileType):
 def verifyFileToStr(fileName, fileType):
     print("Verifying " + fileName + " as filetype " + fileType)
     if verifyFile(fileName, fileType) == True:
-        return "The file is valid!"
+        return fileName + " is valid!"
     else:
         fileDict = parseCSV(fileName)
-        msg = ""
+        msg = fileName + ": "
         if fileDict == None:
             msg += "There are empty cells. \n"
             return msg
