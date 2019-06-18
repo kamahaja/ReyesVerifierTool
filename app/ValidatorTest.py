@@ -100,7 +100,7 @@ class Validator:
     def checkShrinkageQty(self, dict):
         print("Checking Shrinkage quantities")
         for index, qty in enumerate(dict["SHRINKAGE_QTY"]):
-            if self.isdigit(qty) == False or qty > 0:
+            if qty.isdigit() == False or qty > 0:
                 self.message += "Invalid shrinkage quantity on row" + str(index + 2) + ": " + qty + "<br>"
                 return False
 
@@ -120,7 +120,7 @@ class Validator:
     def checkBreakageQty(self, dict):
         print("Checking Breakage quantities")
         for index, qty in enumerate(dict["BREAKAGE_QTY"]):
-            if self.isdigit(qty) == False or qty > 0:
+            if qty.isdigit() == False or qty > 0:
                 self.message += "Invalid breakage quantity on row" + str(index + 2) + ": " + qty + "<br>"
                 return False
 
@@ -140,7 +140,7 @@ class Validator:
     def checkOverageQty(self, dict):
         print("Checking Overage quantities")
         for index, qty in enumerate(dict["OVERAGE_QTY"]):
-            if self.isdigit(qty) == False or qty > 0:
+            if qty.isdigit() == False or qty > 0:
                 self.message += "Invalid overage quantity on row" + str(index + 2) + ": " + qty + "<br>"
                 return False
 
@@ -210,7 +210,7 @@ class Validator:
     def checkStops(self, dict):
         print("Checking Stops")
         for index, stop in enumerate(dict["Stops"]):
-            if self.isdigit(stop) == False or float(stop) < 0:
+            if stop.isdigit() == False or float(stop) < 0:
                 self.message += "Invalid Stops on row" + str(index + 2) + ": " + stop + "<br>"
                 return False
 
@@ -219,7 +219,8 @@ class Validator:
 
     def checkGPDollars(self,dict):
         print("Checking GP Dollars")
-        for index, dollars in enumerate(dict["GP Dollars"]):
+        for index, raw_dollars in enumerate(dict["GP Dollars"]):
+            dollars = float(raw_dollars.replace(',',''))
             if self.is_number(dollars) == False or float(dollars) < 0:
                 self.message += "Invalid GP Dollars on row" + str(index + 2) + ": " + dollars + "<br>"
                 return False
@@ -353,7 +354,7 @@ class Validator:
     def verifyFileToStr(self):
         print("Verifying " + self.fileName + " as filetype " + self.fileType)
         if self.verifyFile() == True:
-            return self.fileName + " is valid!"
+            return self.fileName + " is valid! Uploaded to /VERIFIED_FILES"
         else:
             return self.fileName + ": <br>" + self.message
         
