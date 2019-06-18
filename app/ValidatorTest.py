@@ -17,7 +17,10 @@ class Validator:
         df = pd.read_csv(self.fileName, dtype='str') #we want strings because some are not ints
         df.columns = df.columns.str.strip()
         if df.isnull().values.any():  #if there are empty cells it will not work
-            self.message += "There are empty cells! <br>"
+            df1 = df[df.isna().any(axis=1)].index
+            self.message += "There are empty cells on row(s): "
+            for i in df1:
+                self.message += str(i + 2) + " "
             return None
         dict = df.to_dict(orient='list')
         return dict
