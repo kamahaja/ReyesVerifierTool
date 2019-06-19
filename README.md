@@ -2,7 +2,7 @@
 
 Data verification tool for Reyes Beverage Group
 
-Currently checks files with a basic UI for:
+Currently checks files with a Bootstrap powered web UI for:
 - Labels correct and in the right order, based on what file type it is (INVENTORY, SALES, PAYROLL, etc.)
 - The rows are all filled out (there isn't a row missing some columns)
 - Company IDs consist of letters only (regex) and length > 2
