@@ -51,3 +51,12 @@ def verify():
         #return f.filename + ' uploaded successfully'
 
 
+@app.route('/history')
+def history():
+    listOfFiles = os.listdir(VERIFIED_FILE_PATH)
+    for file in listOfFiles:
+        flash(file)
+    
+    return render_template('history.html')
+
+
