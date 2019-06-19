@@ -89,7 +89,8 @@ class Validator:
 
     def checkCosts(self, dict):
         print("Checking costs")
-        for index, cost in enumerate(dict["CostCtr"]):
+        for index, raw_cost in enumerate(dict["CostCtr"]):
+            cost = raw_cost.replace(',','')
             if self.is_number(cost) == False or len(cost) < 2:
                 self.message += "Invalid cost on row " + str(index + 2) + ": " + cost + "<br>"
                 return False
@@ -99,7 +100,8 @@ class Validator:
 
     def checkShrinkageQty(self, dict):
         print("Checking Shrinkage quantities")
-        for index, qty in enumerate(dict["SHRINKAGE_QTY"]):
+        for index, raw_qty in enumerate(dict["SHRINKAGE_QTY"]):
+            qty = raw_qty.replace(',','')
             if qty.isdigit() == False or qty > 0:
                 self.message += "Invalid shrinkage quantity on row" + str(index + 2) + ": " + qty + "<br>"
                 return False
@@ -109,8 +111,9 @@ class Validator:
 
     def checkShrinkageAmt(self, dict):
         print("Checking Shrinkage amounts")
-        for index, amt in enumerate(dict["SHRINKAGE_AMT"]):
-            if self.is_number(amt) == False or qty > 0:
+        for index, raw_amt in enumerate(dict["SHRINKAGE_AMT"]):
+            amt = raw_amt.replace(',','')
+            if self.is_number(amt) == False or amt > 0:
                 self.message += "Invalid shrinkage amount on row" + str(index + 2) + ": " + amt + "<br>"
                 return False
 
@@ -119,7 +122,8 @@ class Validator:
 
     def checkBreakageQty(self, dict):
         print("Checking Breakage quantities")
-        for index, qty in enumerate(dict["BREAKAGE_QTY"]):
+        for index, raw_qty in enumerate(dict["BREAKAGE_QTY"]):
+            qty = raw_qty.replace(',','')
             if qty.isdigit() == False or qty > 0:
                 self.message += "Invalid breakage quantity on row" + str(index + 2) + ": " + qty + "<br>"
                 return False
@@ -129,8 +133,9 @@ class Validator:
 
     def checkBreakageAmt(self, dict):
         print("Checking Breakage amounts")
-        for index, amt in enumerate(dict["BREAKAGE_AMT"]):
-            if self.is_number(amt) == False or qty > 0:
+        for index, raw_amt in enumerate(dict["BREAKAGE_AMT"]):
+            amt = raw_amt.replace(',','')
+            if self.is_number(amt) == False or amt > 0:
                 self.message += "Invalid breakage amount on row" + str(index + 2) + ": " + amt + "<br>"
                 return False
 
@@ -139,7 +144,8 @@ class Validator:
 
     def checkOverageQty(self, dict):
         print("Checking Overage quantities")
-        for index, qty in enumerate(dict["OVERAGE_QTY"]):
+        for index, raw_qty in enumerate(dict["OVERAGE_QTY"]):
+            qty = raw_qty.replace(',','')
             if qty.isdigit() == False or qty > 0:
                 self.message += "Invalid overage quantity on row" + str(index + 2) + ": " + qty + "<br>"
                 return False
@@ -149,8 +155,9 @@ class Validator:
 
     def checkOverageAmt(self, dict):
         print("Checking Overage amounts")
-        for index, amt in enumerate(dict["OVERAGE_AMT"]):
-            if self.is_number(amt) == False or qty > 0:
+        for index, raw_amt in enumerate(dict["OVERAGE_AMT"]):
+            amt = raw_amt.replace(',','')
+            if self.is_number(amt) == False or amt > 0:
                 self.message += "Invalid overage amount on row" + str(index + 2) + ": " + amt + "<br>"
                 return False
 
@@ -159,7 +166,8 @@ class Validator:
 
     def checkProdHrs(self, dict):
         print("Checking Prod hours")
-        for index, hrs in enumerate(dict["ProdHrs"]):
+        for index, raw_hrs in enumerate(dict["ProdHrs"]):
+            hrs = raw_hrs.replace(',','')
             if self.is_number(hrs) == False or float(hrs) < 0:
                 self.message += "Invalid prod hours on row" + str(index + 2) + ": " + hrs + "<br>"
                 return False
@@ -169,7 +177,8 @@ class Validator:
 
     def checkOTHrs(self, dict):
         print("Checking OT hours")
-        for index, hrs in enumerate(dict["OTHrs"]):
+        for index, raw_hrs in enumerate(dict["OTHrs"]):
+            hrs = raw_hrs.replace(',','')
             if self.is_number(hrs) == False or float(hrs) < 0:
                 self.message += "Invalid OT hours on row" + str(index + 2) + ": " + hrs + "<br>"
                 return False
@@ -179,7 +188,8 @@ class Validator:
 
     def checkProdDollars(self, dict):
         print("Checking Prod dollars")
-        for index, dollars in enumerate(dict["ProdDollars"]):
+        for index, raw_dollars in enumerate(dict["ProdDollars"]):
+            dollars = raw_dollars.replace(',','')
             if self.is_number(dollars) == False or float(dollars) < 0:
                 self.message += "Invalid Prod dollars on row" + str(index + 2) + ": " + dollars + "<br>"
                 return False
@@ -189,7 +199,8 @@ class Validator:
 
     def checkHeadcount(self, dict):
         print("Checking Headcount")
-        for index, count in enumerate(dict["Headcount"]):
+        for index, raw_count in enumerate(dict["Headcount"]):
+            count = raw_count.replace(',','')
             if self.is_number(count) == False or float(count) < 0:
                 self.message += "Invalid Headcount on row" + str(index + 2) + ": " + count + "<br>"
                 return False
@@ -199,7 +210,8 @@ class Validator:
     
     def checkCes(self,dict):
         print("Checking Ces")
-        for index, ces in enumerate(dict["Ces"]):
+        for index, raw_ces in enumerate(dict["Ces"]):
+            ces = raw_ces.replace(',','')
             if self.is_number(ces) == False or float(ces) < 0:
                 self.message += "Invalid Ces on row" + str(index + 2) + ": " + ces + "<br>"
                 return False
@@ -209,7 +221,8 @@ class Validator:
 
     def checkStops(self, dict):
         print("Checking Stops")
-        for index, stop in enumerate(dict["Stops"]):
+        for index, raw_stop in enumerate(dict["Stops"]):
+            stop = raw_stop.replace(',','')
             if stop.isdigit() == False or float(stop) < 0:
                 self.message += "Invalid Stops on row" + str(index + 2) + ": " + stop + "<br>"
                 return False
@@ -220,7 +233,7 @@ class Validator:
     def checkGPDollars(self,dict):
         print("Checking GP Dollars")
         for index, raw_dollars in enumerate(dict["GP Dollars"]):
-            dollars = float(raw_dollars.replace(',',''))
+            dollars = raw_dollars.replace(',','')
             if self.is_number(dollars) == False or float(dollars) < 0:
                 self.message += "Invalid GP Dollars on row" + str(index + 2) + ": " + dollars + "<br>"
                 return False
@@ -230,7 +243,8 @@ class Validator:
 
     def checkSBT(self,dict):
         print("Checking SBT")
-        for index, sbt in enumerate(dict["SBT"]):
+        for index, raw_sbt in enumerate(dict["SBT"]):
+            sbt = raw_sbt.replace(',','')
             if sbt[-1] != "%" and self.is_number(sbt[:-1]) == False: 
                 self.message += "Invalid SBT on row" + str(index + 2) + ": " + sbt + "<br>"
                 return False
@@ -240,7 +254,8 @@ class Validator:
 
     def checkRET(self,dict):
         print("Checking RET")
-        for index, ret in enumerate(dict["RET"]):
+        for index, raw_ret in enumerate(dict["RET"]):
+            ret = raw_ret.replace(',','')
             if ret[-1] != "%" and self.is_number(ret[:-1]) == False: 
                 self.message += "Invalid RET on row" + str(index + 2) + ": " + ret + "<br>"
                 return False
@@ -250,7 +265,8 @@ class Validator:
 
     def checkUNS(self,dict):
         print("Checking UNS")
-        for index, uns in enumerate(dict["UNS"]):
+        for index, raw_uns in enumerate(dict["UNS"]):
+            uns = raw_uns.replace(',','')
             if uns[-1] != "%" and self.is_number(uns[:-1]) == False: 
                 self.message += "Invalid UNS on row" + str(index + 2) + ": " + uns + "<br>"
                 return False
@@ -260,7 +276,8 @@ class Validator:
     
     def checkSPE(self,dict):
         print("Checking SPE")
-        for index, spe in enumerate(dict["SPE"]):
+        for index, raw_spe in enumerate(dict["SPE"]):
+            spe = raw_spe.replace(',','')
             if spe[-1] != "%" and self.is_number(spe[:-1]) == False: 
                 self.message += "Invalid SPE on row" + str(index + 2) + ": " + spe + "<br>"
                 return False
@@ -279,15 +296,14 @@ class Validator:
         areDatesValid = self.checkDates(fileDict)
         areIDsValid = self.checkIds(fileDict)
         areCostsValid = self.checkCosts(fileDict)
-        if(self.fileType.lower() == "inventory"):
+        if(self.fileType.lower() == "inventory" and areLabelsValid):
             areShrinkageQtysValid = self.checkShrinkageQty(fileDict)
             areShrinkageAmtsValid = self.checkShrinkageAmt(fileDict)
             areBreakageQtysValid = self.checkBreakageQty(fileDict)
             areBreakageAmtsValid = self.checkBreakageAmt(fileDict)
             areOverageQtysValid = self.checkOverageQty(fileDict)
             areOverageAmtsValid = self.checkOverageAmt(fileDict)
-            if(areLabelsValid 
-            and areDatesValid 
+            if(areDatesValid 
             and areIDsValid 
             and areCostsValid 
             and areShrinkageAmtsValid 
@@ -300,12 +316,11 @@ class Validator:
             else:
                 return False
 
-        if(self.fileType.lower() == "sales"):
+        if(self.fileType.lower() == "sales" and areLabelsValid):
             areCesValid = self.checkCes(fileDict)
             areStopsValid = self.checkStops(fileDict)
             areGPDollarsValid = self.checkGPDollars(fileDict)
-            if(areLabelsValid 
-            and areDatesValid 
+            if(areDatesValid 
             and areIDsValid 
             and areCostsValid 
             and areCesValid 
@@ -315,13 +330,12 @@ class Validator:
             else:
                 return False
 
-        if(self.fileType.lower() == "payroll"):
+        if(self.fileType.lower() == "payroll" and areLabelsValid):
             areProdHrsValid = self.checkProdHrs(fileDict)
             areOTHrsValid = self.checkOTHrs(fileDict)
             areProdDollarsValid = self.checkProdDollars(fileDict)
             areHeadcountsValid = self.checkHeadcount(fileDict)
-            if(areLabelsValid 
-            and areDatesValid 
+            if(areDatesValid 
             and areIDsValid 
             and areCostsValid 
             and areProdHrsValid 
@@ -332,13 +346,12 @@ class Validator:
             else:
                 return False
 
-        if(self.fileType.lower() == "static percentages"):
+        if(self.fileType.lower() == "static percentages" and areLabelsValid):
             areSBTValid = self.checkSBT(fileDict)
             areRETValid = self.checkRET(fileDict)
             areUNSValid = self.checkUNS(fileDict)
             areSPEValid = self.checkSPE(fileDict)
-            if(areLabelsValid 
-            and areDatesValid 
+            if(areDatesValid 
             and areIDsValid 
             and areCostsValid 
             and areSBTValid 
