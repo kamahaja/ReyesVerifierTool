@@ -6,7 +6,9 @@ import json
 import time
 import os
 
-VERIFIED_FILE_PATH =  "C:/microblog/VERIFIED_FILES"
+APP_ROOT = os.path.dirname(os.path.abspath(__file__)) 
+
+VERIFIED_FILE_PATH = os.path.join(APP_ROOT, 'VERIFIED_FILES')
 
 #view functions go here
 
