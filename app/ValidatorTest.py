@@ -1,6 +1,7 @@
 import pandas as pd
 import numpy as np
 import datetime
+import io
 
 class Validator:
     INVENTORY_LABELS = ["CoID", "Date", "CostCtr", "SHRINKAGE_QTY", "SHRINKAGE_AMT", "BREAKAGE_QTY", "BREAKAGE_AMT", "OVERAGE_QTY", "OVERAGE_AMT"]
