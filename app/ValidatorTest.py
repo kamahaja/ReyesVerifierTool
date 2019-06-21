@@ -87,6 +87,19 @@ class Validator:
         except ValueError:
             return False
 
+    def checkColumnIsPosorNeg(self,dict, colIndex, positiveOrNegative):
+        for positiveOrNegative in enumerate(dict[list(dict)[colIndex]]):
+            if positiveOrNegative < 0:
+                for i in enumerate(dict[list(dict)[colIndex]]):
+                    if i > 0:
+                        return False
+                    return True
+            if positiveOrNegative > 0:
+                for j in enumerate(dict[list(dict)[colIndex]]):
+                    if j < 0:
+                        return False
+                    return True
+                
     def checkCosts(self, dict):
         print("Checking costs")
         for index, raw_cost in enumerate(dict["CostCtr"]):
