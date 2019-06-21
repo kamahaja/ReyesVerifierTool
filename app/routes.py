@@ -1,6 +1,6 @@
 from app import app
 from app import ValidatorTest as vdt
-from flask import render_template, request, flash, redirect, make_response, jsonify, session, url_for
+from flask import render_template, request, flash, redirect, make_response, jsonify, session, url_for, send_file
 from werkzeug.utils import secure_filename
 import json
 import time
@@ -57,8 +57,12 @@ def verify():
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     for file in listOfFiles:
-        flash(file)
+        flash("<a href= '/" + file + "' download> " + file + "</a>")
     
     return render_template('history.html')
+
+@app.route("/<file_name>")
+def download(file_name):
+    return send_file(VERIFIED_FILE_PATH + "/" + file_name, as_attachment=True)
 
 

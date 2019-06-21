@@ -109,7 +109,8 @@
                 {% with messages = get_flashed_messages() %} {% if messages %}
                 <ul class=flashes>
                     {% for message in messages %} {% autoescape false %}
-                    <p><strong>{{ message }}</strong></p>
+                    <p><strong></strong>{{ message }}</strong>
+                    </p>
                     {% endautoescape %} {% endfor %}
                 </ul>
                 {% endif %} {% endwith %}
