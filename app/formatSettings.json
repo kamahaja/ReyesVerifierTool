@@ -37,7 +37,93 @@
         "type": "float",
         "format": "-1.0"
       }
+    },
+    "SALES": {
+      "CoID": {
+        "type": "string",
+        "format": "companys"
+      }, 
+      "Date": {
+        "type": "date",
+        "format": "%m/%d/%Y"
       },
-  },
+      "CostCtr": {
+        "type": "int",
+        "format": "1"
+      },
+      "Ces": {
+        "type": "float",
+        "format": "1.0"
+      },
+      "Stops": {
+        "type": "int",
+        "format": "1"
+      },
+      "GP Dollars": {
+        "type": "float",
+        "format": "1.0"
+      }
+    },
+    "PAYROLL": {
+      "CoID": {
+        "type": "string",
+        "format": "companys"
+      }, 
+      "Date": {
+        "type": "date",
+        "format": "%m/%d/%Y"
+      },
+      "CostCtr": {
+        "type": "int",
+        "format": "1"
+      },
+      "ProdHrs": {
+        "type": "float",
+        "format": "1.0"
+      },
+      "OTHrs": {
+        "type": "float",
+        "format": "1.0"
+      },
+      "ProdDollars": {
+        "type": "float",
+        "format": "1.0"
+      },
+      "Headcount": {
+        "type": "float",
+        "format": "1.0"
+      }
+    },
+    "STATIC PERCENTAGES": {
+      "CoID": {
+        "type": "string",
+        "format": "companys"
+      }, 
+      "Date": {
+        "type": "date",
+        "format": "%m/%d/%Y"
+      },
+      "CostCtr": {
+        "type": "int",
+        "format": "1"
+      },
+      "SBT": {
+        "type": "percentage",
+        "format": "None"
+      },
+      "RET":  {
+        "type": "percentage",
+        "format": "None"
+      },
+      "UNS":  {
+        "type": "percentage",
+        "format": "None"
+      },
+      "SPE":  {
+        "type": "percentage",
+        "format": "None"
+      }
+    }
+  }
   
 }
