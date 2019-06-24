@@ -1,5 +1,5 @@
 {
-    "INVENTORY": {
+    "Inventory": {
         "CoID": {
             "type": "string",
             "format": "companys"
@@ -37,7 +37,7 @@
             "format": "-1.0"
         }
     },
-    "SALES": {
+    "Sales": {
         "CoID": {
             "type": "string",
             "format": "companys"
@@ -63,7 +63,7 @@
             "format": "1.0"
         }
     },
-    "PAYROLL": {
+    "Payroll": {
         "CoID": {
             "type": "string",
             "format": "companys"
@@ -93,7 +93,7 @@
             "format": "1.0"
         }
     },
-    "STATIC PERCENTAGES": {
+    "Static Percentages": {
         "CoID": {
             "type": "string",
             "format": "companys"

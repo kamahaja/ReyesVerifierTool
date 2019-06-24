@@ -15,7 +15,11 @@ class Validator:
         self.fileName = fileName
         self.fileType = fileType
         self.settings = dict()
+        self.dict = dict()
         self.message = ""
+
+        self.parseJSON()
+        self.parseCSV()
 
     def parseJSON(self):
          with open(self.SETTINGS_FILE) as json_file:  
@@ -30,14 +34,13 @@ class Validator:
             for i in df1:
                 self.message += str(i + 2) + " "
             return None
-        dict = df.to_dict(orient='list')
-        return dict
+        self.dict = df.to_dict(orient='list')
     
-    def checkLabels(self, dict):    
+    def checkLabels(self):    
         for validType in self.settings.keys():
             print(validType)
             if self.fileType.lower() == validType.lower():
-                return list(dict.keys()) == list(self.settings[validType].keys())
+                return list(self.dict.keys()) == list(self.settings[validType].keys())
         
         return False
 
@@ -49,15 +52,6 @@ class Validator:
             return False
             #raise ValueError("Incorrect data format, should be MM-DD-YYYY")
 
-    def checkDates(self, dict):
-        print("Checking dates")
-        for index, date in enumerate(dict["Date"]):
-            if self.validateDateFormat(date) == False:
-                self.message += "Invalid date on row " + str(index + 2) + ": " + date + "<br>"
-                return False
-        
-        print("Dates are verified")
-        return True
 
     #checks if the input has any numbers
     def hasNumber(self, inputString):
@@ -86,11 +80,6 @@ class Validator:
         except ValueError:
             return False
 
-    def is_percentage(self,n):
-        if '%' in n:
-            return True
-        return False
-
     def is_string(self,i):
         try:
             int(i)
@@ -98,221 +87,101 @@ class Validator:
         except ValueError:
             return True
             
-    def checkColumnIsPosorNeg(self,dict, colIndex, positiveOrNegative):
-        for positiveOrNegative in enumerate(dict[list(dict)[colIndex]]):
-            if positiveOrNegative < 0:
-                for i in enumerate(dict[list(dict)[colIndex]]):
-                    if i > 0:
-                        return False
-                    return True
-            if positiveOrNegative > 0:
-                for j in enumerate(dict[list(dict)[colIndex]]):
-                    if j < 0:
-                        return False
-                    return True
-    
-    def checkColIsString(self, dict, )
-                
-    def checkCosts(self, dict):
-        print("Checking costs")
-        for index, raw_cost in enumerate(dict["CostCtr"]):
-            cost = raw_cost.replace(',','')
-            if self.is_number(cost) == False or len(cost) < 2:
-                self.message += "Invalid cost on row " + str(index + 2) + ": " + cost + "<br>"
+    def checkColInteger(self, key, token):
+        col = list(self.dict.keys()).index(key)
+        values = self.dict[key]
+        for index, raw_value in enumerate(values):
+            value = raw_value.replace(',','')
+            if value.isdigit() == False:
+                self.message += "Not a valid integer on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
                 return False
             
-        print("Costs are verified")
+            if token > 0:
+                if int(value) < 0:
+                    self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
+                    return False
+            elif token < 0:
+                if int(value) > 0:
+                    self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
+                    return False
+
         return True
 
-    def checkShrinkageQty(self, dict):
-        print("Checking Shrinkage quantities")
-        for index, raw_qty in enumerate(dict["SHRINKAGE_QTY"]):
-            qty = raw_qty.replace(',','')
-            if qty.isdigit() == False or qty > 0:
-                self.message += "Invalid shrinkage quantity on row" + str(index + 2) + ": " + qty + "<br>"
+    def checkColFloat(self, key, token):
+        col = list(self.dict.keys()).index(key)
+        values = self.dict[key]
+        for index, raw_value in enumerate(values):
+            value = raw_value.replace(',','')
+            if self.is_number(value) == False:
+                self.message += "Not a valid float on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
                 return False
+            
+            if token > 0:
+                if float(value) < 0:
+                    self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
+                    return False
+            elif token < 0:
+                if float(value) > 0:
+                    self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
+                    return False
 
-        print("Shrinkage quantities are verified")
-        return True
-
-    def checkShrinkageAmt(self, dict):
-        print("Checking Shrinkage amounts")
-        for index, raw_amt in enumerate(dict["SHRINKAGE_AMT"]):
-            amt = raw_amt.replace(',','')
-            if self.is_number(amt) == False or amt > 0:
-                self.message += "Invalid shrinkage amount on row" + str(index + 2) + ": " + amt + "<br>"
-                return False
-
-        print("Shrinkage amounts are verified")
-        return True
-
-    def checkBreakageQty(self, dict):
-        print("Checking Breakage quantities")
-        for index, raw_qty in enumerate(dict["BREAKAGE_QTY"]):
-            qty = raw_qty.replace(',','')
-            if qty.isdigit() == False or qty > 0:
-                self.message += "Invalid breakage quantity on row" + str(index + 2) + ": " + qty + "<br>"
-                return False
-
-        print("Breakage quantities are verified")
-        return True
-
-    def checkBreakageAmt(self, dict):
-        print("Checking Breakage amounts")
-        for index, raw_amt in enumerate(dict["BREAKAGE_AMT"]):
-            amt = raw_amt.replace(',','')
-            if self.is_number(amt) == False or amt > 0:
-                self.message += "Invalid breakage amount on row" + str(index + 2) + ": " + amt + "<br>"
-                return False
-
-        print("Breakage amounts are verified")
-        return True
-
-    def checkOverageQty(self, dict):
-        print("Checking Overage quantities")
-        for index, raw_qty in enumerate(dict["OVERAGE_QTY"]):
-            qty = raw_qty.replace(',','')
-            if qty.isdigit() == False or qty > 0:
-                self.message += "Invalid overage quantity on row" + str(index + 2) + ": " + qty + "<br>"
-                return False
-
-        print("Overage quantities are verified")
-        return True
-
-    def checkOverageAmt(self, dict):
-        print("Checking Overage amounts")
-        for index, raw_amt in enumerate(dict["OVERAGE_AMT"]):
-            amt = raw_amt.replace(',','')
-            if self.is_number(amt) == False or amt > 0:
-                self.message += "Invalid overage amount on row" + str(index + 2) + ": " + amt + "<br>"
-                return False
-
-        print("Overage amounts are verified")
-        return True
-
-    def checkProdHrs(self, dict):
-        print("Checking Prod hours")
-        for index, raw_hrs in enumerate(dict["ProdHrs"]):
-            hrs = raw_hrs.replace(',','')
-            if self.is_number(hrs) == False or float(hrs) < 0:
-                self.message += "Invalid prod hours on row" + str(index + 2) + ": " + hrs + "<br>"
-                return False
-
-        print("Prod hours are verified")
-        return True
-
-    def checkOTHrs(self, dict):
-        print("Checking OT hours")
-        for index, raw_hrs in enumerate(dict["OTHrs"]):
-            hrs = raw_hrs.replace(',','')
-            if self.is_number(hrs) == False or float(hrs) < 0:
-                self.message += "Invalid OT hours on row" + str(index + 2) + ": " + hrs + "<br>"
-                return False
-
-        print("OT hours are verified")
-        return True
-
-    def checkProdDollars(self, dict):
-        print("Checking Prod dollars")
-        for index, raw_dollars in enumerate(dict["ProdDollars"]):
-            dollars = raw_dollars.replace(',','')
-            if self.is_number(dollars) == False or float(dollars) < 0:
-                self.message += "Invalid Prod dollars on row" + str(index + 2) + ": " + dollars + "<br>"
-                return False
-
-        print("Prod dollars are verified")
-        return True
-
-    def checkHeadcount(self, dict):
-        print("Checking Headcount")
-        for index, raw_count in enumerate(dict["Headcount"]):
-            count = raw_count.replace(',','')
-            if self.is_number(count) == False or float(count) < 0:
-                self.message += "Invalid Headcount on row" + str(index + 2) + ": " + count + "<br>"
-                return False
-
-        print("Headcounts are verified")
         return True
     
-    def checkCes(self,dict):
-        print("Checking Ces")
-        for index, raw_ces in enumerate(dict["Ces"]):
-            ces = raw_ces.replace(',','')
-            if self.is_number(ces) == False or float(ces) < 0:
-                self.message += "Invalid Ces on row" + str(index + 2) + ": " + ces + "<br>"
+    def checkColIsString(self, key):
+        col = list(self.dict.keys()).index(key)
+        values = self.dict[key]
+        for index, value in enumerate(values):
+            if self.hasNumber(value):
+                self.message += "Not a string on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
                 return False
-
-        print("Ces are verified")
+        
         return True
 
-    def checkStops(self, dict):
-        print("Checking Stops")
-        for index, raw_stop in enumerate(dict["Stops"]):
-            stop = raw_stop.replace(',','')
-            if stop.isdigit() == False or float(stop) < 0:
-                self.message += "Invalid Stops on row" + str(index + 2) + ": " + stop + "<br>"
+    def checkColIsPercentage(self, key):
+        col = list(self.dict.keys()).index(key)
+        values = self.dict[key]
+        for index, raw_value in enumerate(values):
+            value = raw_value.replace(',','')
+            if self.is_percentage(value) == False:
+                self.message += "Not a percentage on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
                 return False
 
-        print("Stops are verified")
         return True
 
-    def checkGPDollars(self,dict):
-        print("Checking GP Dollars")
-        for index, raw_dollars in enumerate(dict["GP Dollars"]):
-            dollars = raw_dollars.replace(',','')
-            if self.is_number(dollars) == False or float(dollars) < 0:
-                self.message += "Invalid GP Dollars on row" + str(index + 2) + ": " + dollars + "<br>"
+    def checkColDates(self, key):
+        col = list(self.dict.keys()).index(key)
+        values = self.dict[key]
+        for index, value in enumerate(values):
+            if self.validateDateFormat(value) == False:
+                self.message += "Not a date on row " + str(index + 2) + " col " + str(col) + ": " + value + "<br>"
                 return False
 
-        print("GP Dollars are verified")
-        return True    
-
-    def checkSBT(self,dict):
-        print("Checking SBT")
-        for index, raw_sbt in enumerate(dict["SBT"]):
-            sbt = raw_sbt.replace(',','')
-            if sbt[-1] != "%" and self.is_number(sbt[:-1]) == False: 
-                self.message += "Invalid SBT on row" + str(index + 2) + ": " + sbt + "<br>"
-                return False
-
-        print("SBT are verified")
-        return True  
-
-    def checkRET(self,dict):
-        print("Checking RET")
-        for index, raw_ret in enumerate(dict["RET"]):
-            ret = raw_ret.replace(',','')
-            if ret[-1] != "%" and self.is_number(ret[:-1]) == False: 
-                self.message += "Invalid RET on row" + str(index + 2) + ": " + ret + "<br>"
-                return False
-
-        print("RET are verified")
-        return True
-
-    def checkUNS(self,dict):
-        print("Checking UNS")
-        for index, raw_uns in enumerate(dict["UNS"]):
-            uns = raw_uns.replace(',','')
-            if uns[-1] != "%" and self.is_number(uns[:-1]) == False: 
-                self.message += "Invalid UNS on row" + str(index + 2) + ": " + uns + "<br>"
-                return False
-
-        print("UNS are verified")
-        return True
-    
-    def checkSPE(self,dict):
-        print("Checking SPE")
-        for index, raw_spe in enumerate(dict["SPE"]):
-            spe = raw_spe.replace(',','')
-            if spe[-1] != "%" and self.is_number(spe[:-1]) == False: 
-                self.message += "Invalid SPE on row" + str(index + 2) + ": " + spe + "<br>"
-                return False
-
-        print("SPE are verified")
         return True
 
     def verifyFile(self):
-        
+        valid = True
+        #loop through the column parameters
+        for index, (key, value) in enumerate(self.settings[self.fileType].items()):
+            print(value['type'] + " in col " + str(index))
+            if (value['type'] == "string"):
+                if (self.checkColIsString(key) == False):
+                    print("There is an issue with dates in col " + str(index))
+                    valid = False
+            if (value['type'] == "int"):
+                if (self.checkColInteger(key, int(value['format'])) == False):
+                    print("There is an issue with integers in col " + str(index))
+                    valid = False
+            if (value['type'] == "float"):
+                if (self.checkColFloat(key, float(value['format'])) == False):
+                    print("There is an issue in col " + str(index))
+                    valid = False
+            if (value['type'] == "date"):
+                if (self.checkColDates(key) == False):
+                    print("There is an issue in col " + str(index))
+                    valid = False
+
+        return valid
+                
 
     def verifyFileToStr(self):
         print("Verifying " + self.fileName + " as filetype " + self.fileType)
