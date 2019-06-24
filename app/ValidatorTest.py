@@ -5,10 +5,6 @@ import io
 import json
 
 class Validator:
-    INVENTORY_LABELS = ["CoID", "Date", "CostCtr", "SHRINKAGE_QTY", "SHRINKAGE_AMT", "BREAKAGE_QTY", "BREAKAGE_AMT", "OVERAGE_QTY", "OVERAGE_AMT"]
-    SALES_LABELS = ["CoID", "Date", "CostCtr", "Ces", "Stops", "GP Dollars"]
-    PAYROLL_LABELS = ["CoID", "Date", "CostCtr", "ProdHrs", "OTHrs", "ProdDollars", "Headcount"]
-    STATIC_PERCENTAGES_LABELS = ["CoID", "Date", "CostCtr", "SBT", "RET", "UNS", "SPE"]
     SETTINGS_FILE = "app/formatSettings.json"
     
     def __init__(self, fileName, fileType):
@@ -61,16 +57,6 @@ class Validator:
         if '%' in n:
             return True
         return False
-
-    def checkIds(self, dict):
-        print("Checking ids")
-        for index, company in enumerate(dict["CoID"]):
-            if self.hasNumber(company) or len(company) < 3:
-                self.message += "Invalid company id on row " + str(index + 2) + ": " + company + "<br>"
-                return False
-        
-        print("IDs are verified.")
-        return True
 
     #checks that the input can be converted to float (all numbers)
     def is_number(self, s):
