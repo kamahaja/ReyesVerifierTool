@@ -2,17 +2,24 @@ import pandas as pd
 import numpy as np
 import datetime
 import io
+import json
 
 class Validator:
     INVENTORY_LABELS = ["CoID", "Date", "CostCtr", "SHRINKAGE_QTY", "SHRINKAGE_AMT", "BREAKAGE_QTY", "BREAKAGE_AMT", "OVERAGE_QTY", "OVERAGE_AMT"]
     SALES_LABELS = ["CoID", "Date", "CostCtr", "Ces", "Stops", "GP Dollars"]
     PAYROLL_LABELS = ["CoID", "Date", "CostCtr", "ProdHrs", "OTHrs", "ProdDollars", "Headcount"]
     STATIC_PERCENTAGES_LABELS = ["CoID", "Date", "CostCtr", "SBT", "RET", "UNS", "SPE"]
+    SETTINGS_FILE = "app/formatSettings.json"
     
     def __init__(self, fileName, fileType):
         self.fileName = fileName
         self.fileType = fileType
+        self.settings = dict()
         self.message = ""
+
+    def parseJSON(self):
+         with open(self.SETTINGS_FILE) as json_file:  
+            self.settings = json.load(json_file)
 
     def parseCSV(self):
         df = pd.read_csv(self.fileName, dtype='str') #we want strings because some are not ints
@@ -25,28 +32,14 @@ class Validator:
             return None
         dict = df.to_dict(orient='list')
         return dict
-
-    def checkLabels(self, dict):
-        areLabelsCorrect = False
-        if (self.fileType.lower() == "inventory"):
-            areLabelsCorrect = list(dict.keys()) == self.INVENTORY_LABELS
-            if areLabelsCorrect == False:   
-                self.message += "The labels do not match up with inventory labels. Check if a column is switched or misspelled. <br>"
-        elif (self.fileType.lower() == "sales"):
-            areLabelsCorrect = list(dict.keys()) == self.SALES_LABELS
-            if areLabelsCorrect == False:
-                self.message += "The labels do not match up with sales labels.  Check if a column is switched or misspelled. <br>"
-        elif (self.fileType.lower() == "payroll"):
-            areLabelsCorrect = list(dict.keys()) == self.PAYROLL_LABELS
-            if areLabelsCorrect == False:
-                self.message += "The labels do not match up with payroll labels.  Check if a column is switched or misspelled. <br>"
-        elif (self.fileType.lower() == "static percentages"):
-            areLabelsCorrect = list(dict.keys()) == self.STATIC_PERCENTAGES_LABELS
-            if areLabelsCorrect == False:
-                self.message += "The labels do not match up with static percentages labels.  Check if a column is switched or misspelled. <br>"
-
-        print("Labels are verified: " + str(areLabelsCorrect))
-        return areLabelsCorrect
+    
+    def checkLabels(self, dict):    
+        for validType in self.settings.keys():
+            print(validType)
+            if self.fileType.lower() == validType.lower():
+                return list(dict.keys()) == list(self.settings[validType].keys())
+        
+        return False
 
     def validateDateFormat(self, date_text):
         try:
@@ -69,6 +62,11 @@ class Validator:
     #checks if the input has any numbers
     def hasNumber(self, inputString):
         return any(char.isdigit() for char in inputString)
+
+    def is_percentage(self,n):
+        if '%' in n:
+            return True
+        return False
 
     def checkIds(self, dict):
         print("Checking ids")
@@ -100,6 +98,8 @@ class Validator:
                     if j < 0:
                         return False
                     return True
+    
+    def checkColIsString(self, dict, )
                 
     def checkCosts(self, dict):
         print("Checking costs")
@@ -300,82 +300,6 @@ class Validator:
         return True
 
     def verifyFile(self):
-        fileDict = self.parseCSV()
-        
-        if fileDict == None:
-            return False
-        
-        #add all the messages
-        areLabelsValid = self.checkLabels(fileDict)
-        areDatesValid = self.checkDates(fileDict)
-        areIDsValid = self.checkIds(fileDict)
-        areCostsValid = self.checkCosts(fileDict)
-        if(self.fileType.lower() == "inventory" and areLabelsValid):
-            areShrinkageQtysValid = self.checkShrinkageQty(fileDict)
-            areShrinkageAmtsValid = self.checkShrinkageAmt(fileDict)
-            areBreakageQtysValid = self.checkBreakageQty(fileDict)
-            areBreakageAmtsValid = self.checkBreakageAmt(fileDict)
-            areOverageQtysValid = self.checkOverageQty(fileDict)
-            areOverageAmtsValid = self.checkOverageAmt(fileDict)
-            if(areDatesValid 
-            and areIDsValid 
-            and areCostsValid 
-            and areShrinkageAmtsValid 
-            and areShrinkageQtysValid
-            and areBreakageAmtsValid
-            and areBreakageQtysValid
-            and areOverageAmtsValid
-            and areOverageQtysValid):
-                return True
-            else:
-                return False
-
-        if(self.fileType.lower() == "sales" and areLabelsValid):
-            areCesValid = self.checkCes(fileDict)
-            areStopsValid = self.checkStops(fileDict)
-            areGPDollarsValid = self.checkGPDollars(fileDict)
-            if(areDatesValid 
-            and areIDsValid 
-            and areCostsValid 
-            and areCesValid 
-            and areStopsValid 
-            and areGPDollarsValid):
-                return True
-            else:
-                return False
-
-        if(self.fileType.lower() == "payroll" and areLabelsValid):
-            areProdHrsValid = self.checkProdHrs(fileDict)
-            areOTHrsValid = self.checkOTHrs(fileDict)
-            areProdDollarsValid = self.checkProdDollars(fileDict)
-            areHeadcountsValid = self.checkHeadcount(fileDict)
-            if(areDatesValid 
-            and areIDsValid 
-            and areCostsValid 
-            and areProdHrsValid 
-            and areOTHrsValid 
-            and areProdDollarsValid 
-            and areHeadcountsValid):
-                return True
-            else:
-                return False
-
-        if(self.fileType.lower() == "static percentages" and areLabelsValid):
-            areSBTValid = self.checkSBT(fileDict)
-            areRETValid = self.checkRET(fileDict)
-            areUNSValid = self.checkUNS(fileDict)
-            areSPEValid = self.checkSPE(fileDict)
-            if(areDatesValid 
-            and areIDsValid 
-            and areCostsValid 
-            and areSBTValid 
-            and areSPEValid 
-            and areRETValid 
-            and areUNSValid):
-                return True
-            else:
-                return False
-
         
 
     def verifyFileToStr(self):
