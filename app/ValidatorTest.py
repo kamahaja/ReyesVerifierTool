@@ -93,6 +93,13 @@ class Validator:
             return True
         return False
 
+    def is_string(self,i):
+        try:
+            int(i)
+            return False
+        except ValueError:
+            return True
+            
     def checkColumnIsPosorNeg(self,dict, colIndex, positiveOrNegative):
         for positiveOrNegative in enumerate(dict[list(dict)[colIndex]]):
             if positiveOrNegative < 0:
