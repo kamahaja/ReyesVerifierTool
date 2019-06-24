@@ -86,6 +86,18 @@ class Validator:
         except ValueError:
             return False
 
+    def is_percentage(self,n):
+        if '%' in n:
+            return True
+        return False
+
+    def is_string(self,i):
+        try:
+            int(i)
+            return False
+        except ValueError:
+            return True
+            
     def checkColumnIsPosorNeg(self,dict, colIndex, positiveOrNegative):
         for positiveOrNegative in enumerate(dict[list(dict)[colIndex]]):
             if positiveOrNegative < 0:
