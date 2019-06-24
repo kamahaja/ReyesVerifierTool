@@ -31,19 +31,19 @@ class Validator:
         if (self.fileType.lower() == "inventory"):
             areLabelsCorrect = list(dict.keys()) == self.INVENTORY_LABELS
             if areLabelsCorrect == False:   
-                self.message += "The labels do not match up with inventory labels. <br>"
+                self.message += "The labels do not match up with inventory labels. Check if a column is switched or misspelled. <br>"
         elif (self.fileType.lower() == "sales"):
             areLabelsCorrect = list(dict.keys()) == self.SALES_LABELS
             if areLabelsCorrect == False:
-                self.message += "The labels do not match up with sales labels. <br>"
+                self.message += "The labels do not match up with sales labels.  Check if a column is switched or misspelled. <br>"
         elif (self.fileType.lower() == "payroll"):
             areLabelsCorrect = list(dict.keys()) == self.PAYROLL_LABELS
             if areLabelsCorrect == False:
-                self.message += "The labels do not match up with payroll labels. <br>"
+                self.message += "The labels do not match up with payroll labels.  Check if a column is switched or misspelled. <br>"
         elif (self.fileType.lower() == "static percentages"):
             areLabelsCorrect = list(dict.keys()) == self.STATIC_PERCENTAGES_LABELS
             if areLabelsCorrect == False:
-                self.message += "The labels do not match up with static percentages labels. <br>"
+                self.message += "The labels do not match up with static percentages labels.  Check if a column is switched or misspelled. <br>"
 
         print("Labels are verified: " + str(areLabelsCorrect))
         return areLabelsCorrect

@@ -52,7 +52,7 @@ def verify():
 
         filename = secure_filename(f.filename)
         f.save(filename)
-       
+        
         verifier = vdt.Validator(filename, filetype)
 
         raw_name = os.path.splitext(filename)[0]
