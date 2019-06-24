@@ -1,0 +1,43 @@
+{
+  "file types": {
+    "INVENTORY": {
+      "CoID": {
+        "type": "string",
+        "format": "companys"
+      }, 
+      "Date": {
+        "type": "date",
+        "format": "%m/%d/%Y"
+      },
+      "CostCtr": {
+        "type": "int",
+        "format": "1" //columns must be greater than 0
+      },
+      "SHRINKAGE_QTY": {
+        "type": "int",
+        "format": "-1"
+      },
+      "SHRINKAGE_AMT": {
+        "type": "float",
+        "format": "-1.0"
+      },
+      "BREAKAGE_QTY": {
+        "type": "int",
+        "format": "-1"
+      },
+      "BREAKAGE_AMT": {
+        "type": "float",
+        "format": "-1.0"
+      },
+      "OVERAGE_QTY": {
+        "type": "int",
+        "format": "-1"
+      },
+      "OVERAGE_AMT": {
+        "type": "float",
+        "format": "-1.0"
+      }
+      },
+  },
+  
+}
