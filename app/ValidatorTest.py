@@ -29,7 +29,8 @@ class Validator:
             self.message += "There are empty cells on row(s): "
             for i in df1:
                 self.message += str(i + 2) + " "
-            return None
+            self.dict = None
+            return
         self.dict = df.to_dict(orient='list')
     
     def checkLabels(self):    
@@ -145,6 +146,9 @@ class Validator:
         return True
 
     def verifyFile(self):
+        if (self.dict == None):
+            return False
+
         valid = True
         #loop through the column parameters
         for index, (key, value) in enumerate(self.settings[self.fileType].items()):
