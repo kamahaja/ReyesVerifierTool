@@ -55,11 +55,12 @@ def verify():
 
         raw_name = os.path.splitext(secure_filename(f.filename))[0]
 
+        #create end string
         output = verifier.verifyFileToStr()
         if (numPreviousUploads(raw_name) > 0):
-            output += "<br> This file name has " + str(numPreviousUploads(raw_name)) + " verified version(s). Check the history tab to view/download previous versions."
+            output += "<br>" + f.filename + "has " + str(numPreviousUploads(raw_name)) + " verified version(s). Check the history tab to view/download previous versions."
         else:
-            output += "<br> This file name has never been verified."
+            output += "<br> " + f. filename + " has never been verified."
         
         flash(output)
 
