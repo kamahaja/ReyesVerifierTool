@@ -34,12 +34,15 @@ class Validator:
         self.dict = df.to_dict(orient='list')
     
     def checkLabels(self):    
+        valid = True
         for validType in self.settings.keys():
             print(validType)
             if self.fileType.lower() == validType.lower():
-                return list(self.dict.keys()) == list(self.settings[validType].keys())
+                valid = list(self.dict.keys()) == list(self.settings[validType].keys())
         
-        return False
+        if (valid == False):
+            self.message += "The labels are not valid! Check if some columns are swapped or a label is misspelled."
+        return valid
 
     def validateDateFormat(self, date_text):
         try:
@@ -146,9 +149,9 @@ class Validator:
         return True
 
     def verifyFile(self):
-        if (self.dict == None):
+        if (self.dict == None or self.checkLabels() == False):
             return False
-
+        
         valid = True
         #loop through the column parameters
         for index, (key, value) in enumerate(self.settings[self.fileType].items()):
