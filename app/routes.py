@@ -49,24 +49,26 @@ def verify():
         filetype = request.form.get("selectedHidden", None)
         f = request.files['csvFileInput']
         print(type(f))
-        f.save(secure_filename(f.filename))
-       
-        verifier = vdt.Validator(f.filename, filetype)
 
-        raw_name = os.path.splitext(secure_filename(f.filename))[0]
+        filename = secure_filename(f.filename)
+        f.save(filename)
+       
+        verifier = vdt.Validator(filename, filetype)
+
+        raw_name = os.path.splitext(filename)[0]
 
         #create end string
         output = verifier.verifyFileToStr()
         if (numPreviousUploads(raw_name) > 0):
-            output += "<br>" + f.filename + "has " + str(numPreviousUploads(raw_name)) + " verified version(s). Check the history tab to view/download previous versions."
+            output += "<br>" + filename + " has " + str(numPreviousUploads(raw_name)) + " verified version(s). Check the history tab to view/download previous versions."
         else:
-            output += "<br> " + f. filename + " has never been verified."
+            output += "<br> " + filename + " has never been verified."
         
         flash(output)
 
         #raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv"
         if (verifier.verifyFile() == True):
-            copyfile(f.filename, VERIFIED_FILE_PATH + "/" + raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv")
+            copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv")
 
         return redirect(url_for('.index'))
         #return f.filename + ' uploaded successfully'
