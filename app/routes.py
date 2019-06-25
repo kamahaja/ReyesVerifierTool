@@ -31,6 +31,7 @@ def index():
     if request.method == "POST":
 
         file = request.files["file"]
+        fileType = request.form.get("fileTypeData")
 
         print("File uploaded")
         print(file)
@@ -38,7 +39,24 @@ def index():
         filename = secure_filename(file.filename)
         file.save(filename)
 
-        res = make_response(jsonify({"message": filename + " uploaded. You will be automatically redirected."}), 200)
+        print(filename)
+        verifier = vdt.Validator(file.filename, fileType, JSON_FILE_PATH)
+        
+        raw_name = os.path.splitext(filename)[0]
+
+        #create end string
+        output = verifier.verifyFileToStr()
+        if (numPreviousUploads(raw_name) > 0):
+            output += "<br>" + filename + " has " + str(numPreviousUploads(raw_name)) + " previously verified version(s). Check the history tab to view/download previous versions."
+        else:
+            output += "<br>" + filename + " has never been verified."
+
+        verified = verifier.verifyFile()
+        #raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv"
+        if (verified == True):
+            copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv")
+
+        res = make_response(jsonify({"message": output, "valid": verified}), 200)
 
         return res
         
@@ -64,9 +82,9 @@ def verify():
         #create end string
         output = verifier.verifyFileToStr()
         if (numPreviousUploads(raw_name) > 0):
-            output += "<br>" + filename + " has " + str(numPreviousUploads(raw_name)) + " previously verified version(s). Check the history tab to view/download previous versions."
+            output += "\n" + filename + " has " + str(numPreviousUploads(raw_name)) + " previously verified version(s). Check the history tab to view/download previous versions."
         else:
-            output += "<br> " + filename + " has never been verified."
+            output += "\n " + filename + " has never been verified."
         
         flash(output)
 
