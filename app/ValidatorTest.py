@@ -40,7 +40,7 @@ class Validator:
                 valid = list(self.dict.keys()) == list(self.settings[validType].keys())
         
         if (valid == False):
-            self.message += "The labels are not valid! Check if some columns are swapped or a label is misspelled."
+            self.message += "The labels are not valid for filetype " + self.fileType + "! Check if some columns are swapped or a label is misspelled."
         return valid
 
     def validateDateFormat(self, date_text):
