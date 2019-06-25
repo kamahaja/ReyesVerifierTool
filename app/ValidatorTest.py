@@ -4,13 +4,12 @@ import datetime
 import io
 import json
 
-class Validator:
-    SETTINGS_FILE = "app/formatSettings.json"
-    
-    def __init__(self, fileName, fileType):
+class Validator:    
+    def __init__(self, fileName, fileType, settingsPath):
         self.fileName = fileName
         self.fileType = fileType
         self.settings = dict()
+        self.SETTINGS_FILE = settingsPath
         self.dict = dict()
         self.message = ""
 
