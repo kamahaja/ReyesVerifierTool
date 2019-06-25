@@ -11,6 +11,8 @@ APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 VERIFIED_FILE_PATH = os.path.join(APP_ROOT, 'VERIFIED_FILES')
 
+JSON_FILE_PATH = "app/formatSettings.json"
+
 def numPreviousUploads(fileName):
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     count = 0
@@ -55,7 +57,7 @@ def verify():
         #f.save(filename)
 
         #pass our filename and filetype into our validator object
-        verifier = vdt.Validator(filename, filetype)
+        verifier = vdt.Validator(filename, filetype, JSON_FILE_PATH)
         
         raw_name = os.path.splitext(filename)[0]
 
@@ -90,7 +92,20 @@ def download(file_name):
     except Exception as e:
         return str(e)
 
-@app.route("/settings")
+@app.route("/settings", methods = ["GET", "POST"])
 def settings():
+    if request.method == "POST":
+        #use the request object to get the file from the file input in index.html
+        jsonFile = request.files['jsonFileInput']
+
+        filename = secure_filename(jsonFile.filename)
+        jsonFile.save(filename)
+
+        JSON_FILE_PATH = "app/" + filename
+
+        flash("New validation settings updated")
+
+        return render_template("settings.html")
+
     return render_template("settings.html")
 
