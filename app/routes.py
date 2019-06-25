@@ -51,10 +51,10 @@ def verify():
         print(type(f))
 
         filename = secure_filename(f.filename)
-        f.save(filename)
-        
-        verifier = vdt.Validator(filename, filetype)
+        #f.save(filename)
 
+        verifier = vdt.Validator(filename, filetype)
+        
         raw_name = os.path.splitext(filename)[0]
 
         #create end string
@@ -73,7 +73,6 @@ def verify():
         return redirect(url_for('.index'))
         #return f.filename + ' uploaded successfully'
 
-
 @app.route('/history')
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
@@ -89,4 +88,7 @@ def download(file_name):
     except Exception as e:
         return str(e)
 
+@app.route("/settings")
+def settings():
+    return render_template("settings.html")
 
