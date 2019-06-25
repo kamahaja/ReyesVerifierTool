@@ -47,12 +47,14 @@ def index():
 def verify():
     if request.method == 'POST':
         filetype = request.form.get("selectedHidden", None)
+        #use the request object to get the file from the file input in index.html
         f = request.files['csvFileInput']
         print(type(f))
 
         filename = secure_filename(f.filename)
         #f.save(filename)
 
+        #pass our filename and filetype into our validator object
         verifier = vdt.Validator(filename, filetype)
         
         raw_name = os.path.splitext(filename)[0]

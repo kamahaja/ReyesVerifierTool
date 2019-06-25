@@ -14,6 +14,7 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/metisMenu.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/owl.carousel.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/slicknav.min.css') }}">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
     <!-- amchart css -->
     <link rel="stylesheet" href="https://www.amcharts.com/lib/3/plugins/export/export.css" type="text/css" media="all" />
     <!-- others css -->
@@ -110,6 +111,9 @@
                     <!-- File selection box -->
                     <div class="input-group mb-3">
                         <!-- Dropdown menu -->
+                        <button type="button" class="btn btn-default btn-sm" href="/settings">
+                            <i class="fa fa-cog"></i>
+                        </button>
                         <button id="selected" class="btn btn-outline-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">File Type</button>
                         <input type="hidden" name="selectedHidden" id="selectedHidden" value="">
                         <div class="dropdown-menu" name="types">
