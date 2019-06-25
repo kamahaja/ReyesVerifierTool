@@ -119,8 +119,8 @@
             "format": "None"
         },
         "SPE": {
-            "type": "int",
-            "format": "1"
+            "type": "percentage",
+            "format": "none"
         }
     }
 }

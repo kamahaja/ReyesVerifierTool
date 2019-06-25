@@ -57,7 +57,7 @@
                                 <ul class="collapse">
                                     <li class=""><a href="/">Verify Files</a></li>
                                     <li class=""><a href="/history">Verification History</a></li>
-                                    <li class="active"><a href="/settings">Verification Settings</a></li>
+                                    <li class="active"><a href="/settings">Settings</a></li>
                                 </ul>
                             </li>
                         </ul>
@@ -109,7 +109,7 @@
                 <form id="fileForm" action="/settings" method="POST" enctype="multipart/form-data">
                     <!-- File selection box -->
                     <div class="input-group mb-3">
-            
+
                         <div class="custom-file">
                             <input type="file" accept=".json" class="custom-file-input" id="jsonFileInput" name="jsonFileInput" aria-describedby="inputGroupFileAddon01">
                             <label id="file_input_label" class="custom-file-label" for="jsonFileInput">Choose File</label>
@@ -133,7 +133,7 @@
                     {% endautoescape %} {% endfor %}
                 </ul>
                 {% endif %} {% endwith %}
-                
+
             </div>
         </div>
 
@@ -150,13 +150,13 @@
     <!-- jquery latest version -->
     <script>
         $('#jsonFileInput').on('change', function() {
-            //get the file name
-            var pathwithfilename = $(this).val();
-            var fileName = pathwithfilename.substring(12);
-            //replace the "Choose a file" label
-            $(this).next('.custom-file-label').html(fileName);
-        })
-    // Function to upload file
+                //get the file name
+                var pathwithfilename = $(this).val();
+                var fileName = pathwithfilename.substring(12);
+                //replace the "Choose a file" label
+                $(this).next('.custom-file-label').html(fileName);
+            })
+            // Function to upload file
         function upload(url) {
             // Reject if the file input is empty & throw alert
             if (!input.value) {
@@ -164,7 +164,6 @@
                 show_alert("No file selected", "warning")
 
                 return;
-
             }
 
             // Create a new FormData instance
@@ -302,7 +301,6 @@
             file_input_label.innerText = "Select file";
 
         }
-
     </script>
     <script src="{{ url_for('static', filename='js/vendor/jquery-2.2.4.min.js') }}"></script>
     <!-- bootstrap 4 js -->

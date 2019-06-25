@@ -64,7 +64,7 @@ def verify():
         #create end string
         output = verifier.verifyFileToStr()
         if (numPreviousUploads(raw_name) > 0):
-            output += "<br>" + filename + " has " + str(numPreviousUploads(raw_name)) + " verified version(s). Check the history tab to view/download previous versions."
+            output += "<br>" + filename + " has " + str(numPreviousUploads(raw_name)) + " previously verified version(s). Check the history tab to view/download previous versions."
         else:
             output += "<br> " + filename + " has never been verified."
         
