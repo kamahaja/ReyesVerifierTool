@@ -117,6 +117,8 @@ def settings():
         jsonFile = request.files['jsonFileInput']
 
         filename = secure_filename(jsonFile.filename)
+
+        print(filename)
         jsonFile.save(JSON_FILE_PATH)
     
         return ('', 204)

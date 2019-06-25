@@ -107,28 +107,19 @@
                     <!-- File selection box -->
                     <div class="input-group mb-3">
 
-                        <div class="custom-file">
+                        <div class="custom-file" id="fileWrapper">
                             <input type="file" accept=".json" class="custom-file-input" id="jsonFileInput" name="jsonFileInput" aria-describedby="inputGroupFileAddon01">
                             <label id="file_input_label" class="custom-file-label" for="jsonFileInput">Choose File</label>
                         </div>
                         <div class="input-group-append">
                             <!-- Passes in the request object to upload() -->
-                            <button class="btn btn-primary" onclick="settingsMsg();" type="submit" id="upload_btn" data-toggle="" aria-haspopup="" aria-expanded="false">Save Validation Settings</button>
-
-                            <p id="demo"></p>
-                            <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
-                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                                Uploading...
-
-                            </button>
+                            <button class="btn btn-primary" onclick="settingsMsg(); $('#file_input_label').html('Choose a file')" type="submit" id="upload_btn" data-toggle="" aria-haspopup="" aria-expanded="false">Save Validation Settings</button>
 
                         </div>
                     </div>
                 </form>
 
-                <br>
-
-                {% with messages = get_flashed_messages() %} {% if messages %}
+                <br> {% with messages = get_flashed_messages() %} {% if messages %}
                 <ul class=flashes>
                     {% for message in messages %} {% autoescape false %}
                     <p><strong></strong>{{ message }}</strong>
@@ -137,7 +128,7 @@
                 </ul>
                 {% endif %} {% endwith %}
 
-                <div id = "settingsMsg"></div>
+                <div id="settingsMsg"></div>
             </div>
         </div>
 
@@ -154,13 +145,18 @@
     <!-- jquery latest version -->
     <script>
         $('#jsonFileInput').on('change', function() {
-                //get the file name
-                var pathwithfilename = $(this).val();
-                var fileName = pathwithfilename.substring(12);
-                //replace the "Choose a file" label
-                $(this).next('.custom-file-label').html(fileName);
-            })
-            // Function to upload file
+            //get the file name
+            var pathwithfilename = $(this).val();
+            var fileName = pathwithfilename.substring(12);
+            //replace the "Choose a file" label
+            $(this).next('.custom-file-label').html(fileName);
+        })
+
+        // Get a reference to the file input element & input label and input type label
+        var input = document.getElementById("jsonFileInput");
+        var file_input_label = document.getElementById("file_input_label");
+
+        // Function to upload file
         function upload(url) {
             // Reject if the file input is empty & throw alert
             if (!input.value) {
@@ -306,7 +302,7 @@
             progress.setAttribute("style", `width: 0%`);
 
             // Reset the input placeholder
-            file_input_label.innerText = "Select file";
+            file_input_label.innerHTML = "Select file";
 
         }
     </script>
