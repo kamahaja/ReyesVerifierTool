@@ -105,7 +105,7 @@
             <div class="main-content-inner">
                 <br>
                 <br>
-                <h1>VERIFIED FILES</h1>
+                <h1>SETTINGS</h1>
 
                 {% with messages = get_flashed_messages() %} {% if messages %}
                 <ul class=flashes>
@@ -115,6 +115,19 @@
                     {% endautoescape %} {% endfor %}
                 </ul>
                 {% endif %} {% endwith %}
+
+                <div class="custom-file">
+                    <input type="file" accept=".csv" class="custom-file-input" id="csvFileInput" name="csvFileInput" aria-describedby="inputGroupFileAddon01">
+                    <label id="file_input_label" class="custom-file-label" for="csvFileInput">Choose File</label>
+                </div>
+                <div class="input-group-append">
+                    <!-- Passes in the request object to upload() -->
+                    <button class="btn btn-primary" type="submit" id="upload_btn" data-toggle="" aria-haspopup="" aria-expanded="false">Save Validation Settings</button>
+                    <button class="btn btn-primary d-none" id="loading_btn" type="button" disabled>
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        Uploading...
+                    </button>
+                </div>
             </div>
         </div>
 
