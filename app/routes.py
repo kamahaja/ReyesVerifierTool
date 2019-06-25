@@ -40,7 +40,7 @@ def index():
         file.save(filename)
 
         print(filename)
-        verifier = vdt.Validator(file.filename, fileType, JSON_FILE_PATH)
+        verifier = vdt.Validator(filename, fileType, JSON_FILE_PATH)
         
         raw_name = os.path.splitext(filename)[0]
 
