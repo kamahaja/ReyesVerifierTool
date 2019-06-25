@@ -171,6 +171,10 @@ class Validator:
                 if (self.checkColDates(key) == False):
                     print("There is an issue in col " + str(index))
                     valid = False
+            if (value['type'] == "percentage"):
+                if (self.checkColIsPercentage(key) == False):
+                    print("There is an issue in col " + str(index))
+                    valid = False
 
         return valid
                 

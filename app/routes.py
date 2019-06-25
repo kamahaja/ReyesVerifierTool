@@ -81,14 +81,14 @@ def verify():
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     for file in listOfFiles:
-        flash("<a href= '/download/" + file + "'> " + file + "</a>")
+        flash("<a href= '/download/VERIFIED_FILES/" + file + "'> " + file + "</a>")
     
     return render_template('history.html')
 
 @app.route("/download/<file_name>", methods = ['GET', 'POST'])
 def download(file_name):
     try:
-        return send_from_directory(VERIFIED_FILE_PATH, file_name, as_attachment=True)
+        return send_from_directory(APP_ROOT, file_name, as_attachment=True)
     except Exception as e:
         return str(e)
 
@@ -99,13 +99,11 @@ def settings():
         jsonFile = request.files['jsonFileInput']
 
         filename = secure_filename(jsonFile.filename)
-        jsonFile.save(filename)
-
-        JSON_FILE_PATH = "app/" + filename
+        jsonFile.save(JSON_FILE_PATH)
 
         flash("New validation settings updated")
 
         return render_template("settings.html")
-
+    flash("<a href= '/download/formatSettings.json'>Current Settings File</a>")
     return render_template("settings.html")
 
