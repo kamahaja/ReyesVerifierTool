@@ -118,10 +118,9 @@ def settings():
 
         filename = secure_filename(jsonFile.filename)
         jsonFile.save(JSON_FILE_PATH)
+    
+        return ('', 204)
 
-        flash("New validation settings updated")
-
-        return render_template("settings.html")
     flash("<a href= '/download/formatSettings.json'>Current Settings File</a>")
     return render_template("settings.html")
 
