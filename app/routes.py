@@ -56,6 +56,8 @@ def index():
         if (verified == True):
             copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv")
 
+        os.remove(filename)
+        
         res = make_response(jsonify({"message": output, "valid": verified}), 200)
 
         return res
