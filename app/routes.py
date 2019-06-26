@@ -8,6 +8,14 @@ import json
 import time
 import os
 
+# GOAL FOR 6/27
+# create VerifiedFile class to store the date uploaded of each file 
+# so that we can sort the verified files by date
+
+# OR use os modules to append creation dates to the filename and
+# sort them that way
+
+
 APP_ROOT = os.path.dirname(os.path.abspath(__file__)) 
 
 VERIFIED_FILE_PATH = os.path.join(APP_ROOT, 'VERIFIED_FILES')
