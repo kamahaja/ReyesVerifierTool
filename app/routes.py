@@ -3,6 +3,7 @@ from app import ValidatorTest as vdt
 from flask import render_template, request, flash, redirect, make_response, jsonify, session, url_for, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from shutil import copyfile
+from datetime import datetime
 import json
 import time
 import os
@@ -21,6 +22,21 @@ def numPreviousUploads(fileName):
             count = count + 1
 
     return count
+
+def stripExtension(fileName):
+    return os.path.splitext(fileName)[0]
+
+def stripDate(fileNameWithDate):
+    return fileNameWithDate.rsplit("_", 1)[0]
+
+def dateUploaded(fileName):
+    raw_name = stripExtension(fileName)
+
+    raw_date = raw_name.rsplit("_", 1)[1]
+
+    myTime = datetime.strptime(raw_date, "%Y%m%d-%H%M%S")
+
+    return myTime.strftime("%B %d, %Y -- %H:%M:%S")
     
 
 #view functions go here
@@ -68,7 +84,9 @@ def index():
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     for file in listOfFiles:
-        flash("<div class='card border border-info bg-light text-black mb-3'><div class='card-body'><h5 class='card-title'>" + file + "</h5><p class='card-text'>Ready for transfer</p><a href= '/uploads/VERIFIED_FILES/" + file + "'>Download</a></div></div>")
+        raw_name = stripExtension(file)
+        raw_name = stripDate(raw_name)
+        flash("<div class='card border border-info bg-light text-black mb-3'><div class='card-body'><h5 class='card-title'>" + raw_name + "</h5><p class='card-text'>Verified on " + dateUploaded(file) + ".</p><a href= '/uploads/VERIFIED_FILES/" + file + "'>Download</a></div></div>")
     
     return render_template('history.html')
 
