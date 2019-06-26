@@ -1,6 +1,6 @@
 from app import app
 from app import ValidatorTest as vdt
-from flask import render_template, request, flash, redirect, make_response, jsonify, session, url_for, send_from_directory
+from flask import render_template, request, flash, redirect, make_response, jsonify, session, url_for, send_from_directory, send_file
 from werkzeug.utils import secure_filename
 from shutil import copyfile
 import json
@@ -62,51 +62,20 @@ def index():
         
     return render_template('index.html')
 
-
-@app.route('/verify', methods = ['GET', 'POST'])
-def verify():
-    if request.method == 'POST':
-        filetype = request.form.get("selectedHidden", None)
-        #use the request object to get the file from the file input in index.html
-        f = request.files['csvFileInput']
-        print(type(f))
-
-        filename = secure_filename(f.filename)
-        #f.save(filename)
-
-        #pass our filename and filetype into our validator object
-        verifier = vdt.Validator(filename, filetype, JSON_FILE_PATH)
-        
-        raw_name = os.path.splitext(filename)[0]
-
-        #create end string
-        output = verifier.verifyFileToStr()
-        if (numPreviousUploads(raw_name) > 0):
-            output += "\n" + filename + " has " + str(numPreviousUploads(raw_name)) + " previously verified version(s). Check the history tab to view/download previous versions."
-        else:
-            output += "\n " + filename + " has never been verified."
-        
-        flash(output)
-
-        #raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv"
-        if (verifier.verifyFile() == True):
-            copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv")
-
-        return redirect(url_for('.index'))
-        #return f.filename + ' uploaded successfully'
-
 @app.route('/history')
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     for file in listOfFiles:
-        flash("<a href= '/download/VERIFIED_FILES/" + file + "'> " + file + "</a>")
+        flash("<a href= '/uploads/VERIFIED_FILES/" + file + "'> " + file + "</a>")
     
     return render_template('history.html')
 
-@app.route("/download/<file_name>", methods = ['GET', 'POST'])
+@app.route("/uploads/<path:file_name>", methods = ['GET', 'POST'])
 def download(file_name):
     try:
+        #return("Hello")
         return send_from_directory(APP_ROOT, file_name, as_attachment=True)
+        #return send_file(APP_ROOT + file_name, as_attachment=True)
     except Exception as e:
         return str(e)
 
@@ -123,6 +92,6 @@ def settings():
     
         return ('', 204)
 
-    flash("<a href= '/download/formatSettings.json'>Current Settings File</a>")
+    flash("<a href= '/uploads/formatSettings.json'>Current Settings File</a>")
     return render_template("settings.html")
 
