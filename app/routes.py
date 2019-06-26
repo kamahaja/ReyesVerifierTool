@@ -54,7 +54,7 @@ def index():
         verified = verifier.verifyFile()
         #raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv"
         if (verified == True):
-            copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv")
+            copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + "_" + time.strftime("%Y%m%d-%H%M%S") + ".csv")
 
         os.remove(filename)
         
@@ -68,7 +68,7 @@ def index():
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     for file in listOfFiles:
-        flash("<a href= '/uploads/VERIFIED_FILES/" + file + "'> " + file + "</a>")
+        flash("<div class='card border border-info bg-light text-black mb-3'><div class='card-body'><h5 class='card-title'>" + file + "</h5><p class='card-text'>Ready for transfer</p><a href= '/uploads/VERIFIED_FILES/" + file + "'>Download</a></div></div>")
     
     return render_template('history.html')
 
