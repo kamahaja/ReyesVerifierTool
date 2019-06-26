@@ -82,12 +82,12 @@ class Validator:
         for index, raw_value in enumerate(values):
             value = raw_value.replace(',','')
             if value.isdigit() == False:
-                self.message += "Not a valid integer on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                self.message += "Not a valid integer on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
             
             if token > 0:
                 if int(value) < 0:
-                    self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                    self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                     return False
             elif token < 0:
                 if int(value) > 0:
@@ -102,16 +102,16 @@ class Validator:
         for index, raw_value in enumerate(values):
             value = raw_value.replace(',','')
             if self.is_number(value) == False:
-                self.message += "Not a valid float on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                self.message += "Not a valid float on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
             
             if token > 0:
                 if float(value) < 0:
-                    self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                    self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                     return False
             elif token < 0:
                 if float(value) > 0:
-                    self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                    self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                     return False
 
         return True
@@ -121,7 +121,7 @@ class Validator:
         values = self.dict[key]
         for index, value in enumerate(values):
             if self.hasNumber(value):
-                self.message += "Not a string on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                self.message += "Not a valid string on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
         
         return True
@@ -132,7 +132,7 @@ class Validator:
         for index, raw_value in enumerate(values):
             value = raw_value.replace(',','')
             if self.is_percentage(value) == False:
-                self.message += "Not a percentage on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                self.message += "Not a percentage on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
 
         return True
@@ -142,7 +142,7 @@ class Validator:
         values = self.dict[key]
         for index, value in enumerate(values):
             if self.validateDateFormat(value) == False:
-                self.message += "Not a date on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                self.message += "Not a date on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
 
         return True
