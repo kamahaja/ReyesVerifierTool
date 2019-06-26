@@ -199,6 +199,10 @@
         var input = document.getElementById("csvFileInput");
         var file_input_label = document.getElementById("file_input_label");
 
+        // Get a reference to the file type button and hidden tracker
+        var file_type_drop = document.getElementById("selected");
+        var file_type_hidden = document.getElementById("selectedHidden")
+
         // Function to show alerts
         function show_alert(message, alert) {
 
@@ -218,6 +222,13 @@
             if (!input.value) {
 
                 show_alert("No file selected", "warning")
+
+                return;
+            }
+
+            if (!file_type_hidden.value) {
+
+                show_alert("No file type selected", "warning")
 
                 return;
             }
@@ -363,6 +374,10 @@
 
             // Reset file input
             document.querySelector('#csvFileInput').value = ''
+
+            // Reset file type dropdown button and hidden tracker
+            file_type_drop.innerHTML = "File Type";
+            file_type_hidden.value = "";
 
         }
     </script>
