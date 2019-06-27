@@ -9,7 +9,7 @@ import time
 import os
 
 # GOAL FOR 6/27
-# create VerifiedFile class to store the date uploaded of each file 
+# create VerifiedFile class to store the date uploaded of each file on creation
 # so that we can sort the verified files by date
 
 # OR use os modules to append creation dates to the filename and
