@@ -152,7 +152,8 @@ class Validator:
             if self.fileType == "Static Percentages":
                 if ("static_percentage" or "static percentage") in self.fileName.lower():
                     return True
-            self.message += "File Type and File Name do not match! Try again"
+            self.message = ""
+            self.message += "File type and file name do not match! Try again"
             return False
 
         if (self.dict == None or self.checkLabels() == False):

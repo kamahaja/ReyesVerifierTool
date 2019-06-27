@@ -97,6 +97,7 @@
     padding: 0 30px 50px;
 }
 
+
 /*------------------------- END Core Css -------------------*/
 
 
@@ -143,17 +144,20 @@
     background: #303641;
     border-bottom: 1px solid #343e50;
 }
-.sidebar-menu .logo{
+
+.sidebar-menu .logo {
     text-align: center;
 }
+
 .logo a {
     display: inline-block;
     max-width: 120px;
 }
 
-.metismenu >li >a {
+.metismenu>li>a {
     padding-left: 32px!important;
 }
+
 .metismenu li a {
     position: relative;
     display: block;
@@ -206,8 +210,8 @@
     padding-left: 37px;
 }
 
-.metismenu >li:hover>a,
-.metismenu >li.active>a {
+.metismenu>li:hover>a,
+.metismenu>li.active>a {
     color: #fff;
     background: #343942;
 }
@@ -225,6 +229,7 @@
 .metismenu li li a:after {
     top: 6px;
 }
+
 
 /*-------------------- END Sidebar Menu -------------------*/
 
@@ -255,7 +260,7 @@
 
 .mainheader-area .notification-area {
     -webkit-transform: translateY(-11px);
-            transform: translateY(-11px);
+    transform: translateY(-11px);
 }
 
 .mainheader-area {
@@ -342,6 +347,7 @@
     width: 100%;
 }
 
+
 /* mobile menu */
 
 .slicknav_menu {
@@ -390,6 +396,7 @@
     float: right;
 }
 
+
 /*-------------------- END Horizontal Menu -------------------*/
 
 
@@ -425,12 +432,12 @@
 
 .sbar_collapsed .nav-btn span:first-child {
     -webkit-transform: rotate(45deg)translate(5px, 5px);
-            transform: rotate(45deg)translate(5px, 5px);
+    transform: rotate(45deg)translate(5px, 5px);
 }
 
 .sbar_collapsed .nav-btn span:last-child {
     -webkit-transform: rotate(-45deg)translate(3px, -3px);
-            transform: rotate(-45deg)translate(3px, -3px);
+    transform: rotate(-45deg)translate(3px, -3px);
 }
 
 .search-box form {
@@ -473,9 +480,9 @@
 
 .notification-area {
     -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
     position: relative;
     z-index: 1;
 }
@@ -485,9 +492,9 @@
     margin-left: 20px;
     cursor: pointer;
     -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .notification-area li.settings-btn.active i {
@@ -602,6 +609,7 @@
     font-weight: 300;
 }
 
+
 /* notify envelope */
 
 .expanded .notification-area li#full-view-exit {
@@ -640,7 +648,9 @@
     margin-top: 4px;
 }
 
+
 /*-------------------- END Header Area -------------------*/
+
 
 /*-------------------- 2.3 Page Title Area -------------------*/
 
@@ -659,7 +669,7 @@
     height: 36px;
     background: var(--primary-color);
     -webkit-transform: translateY(-50%);
-            transform: translateY(-50%);
+    transform: translateY(-50%);
 }
 
 .page-title {
@@ -709,10 +719,10 @@ ul.breadcrumbs {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
     background: -webkit-linear-gradient(left, #8914fe 0%, #8063f5 100%);
     background: linear-gradient(to right, #8914fe 0%, #8063f5 100%);
     padding: 17px 38px;
@@ -733,9 +743,9 @@ ul.breadcrumbs {
     letter-spacing: 0;
     cursor: pointer;
     -webkit-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
 }
 
 .user-name i {
@@ -760,7 +770,7 @@ ul.breadcrumbs {
     background: #fff;
     border: none;
     -webkit-transform: none!important;
-            transform: none!important;
+    transform: none!important;
     top: 130%!important;
     right: 30px!important;
     left: auto!important;
@@ -797,6 +807,7 @@ ul.breadcrumbs {
     background: #f8f9fa;
     color: #2942fa;
 }
+
 
 /*-------------------- END Page Title Area -------------------*/
 
@@ -871,6 +882,7 @@ ul.breadcrumbs {
     display: none;
 }
 
+
 /*-------------------- END Fact Area ------------------- */
 
 
@@ -924,13 +936,13 @@ table.dbkit-table tr {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
+    flex-wrap: nowrap;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
     height: 71px;
     border: 1px solid transparent;
     padding: 0 30px;
@@ -976,6 +988,7 @@ table.dbkit-table tr td {
 .sell img {
     margin-left: 10px;
 }
+
 
 /*-------------------- END Market value ------------------- */
 
@@ -1040,6 +1053,7 @@ table.dbkit-table tr td {
     color: #ff0e0e;
 }
 
+
 /*-------------------- END Live Crypto Price ------------------- */
 
 
@@ -1063,6 +1077,7 @@ table.dbkit-table tr td {
     color: #565656;
 }
 
+
 /*-------------------- END Trading History ------------------- */
 
 
@@ -1074,20 +1089,20 @@ table.dbkit-table tr td {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
 }
 
 .lts-thumb {
     -ms-flex-preferred-size: calc(40% - 10px);
-        flex-basis: calc(40% - 10px);
+    flex-basis: calc(40% - 10px);
 }
 
 .lts-content {
     -ms-flex-preferred-size: calc(60% - 10px);
-        flex-basis: calc(60% - 10px);
+    flex-basis: calc(60% - 10px);
 }
 
 .lts-content span {
@@ -1188,6 +1203,7 @@ table.dbkit-table tr td {
     margin-bottom: 0;
 }
 
+
 /*-------------------- END Letest Post ------------------- */
 
 
@@ -1203,7 +1219,6 @@ table.dbkit-table tr td {
 #visitor_graph {
     height: 400px;
 }
-
 
 
 /* Todays Order List */
@@ -1239,6 +1254,7 @@ table.dbkit-table tr td {
 .pagination_area ul li a i {
     font-size: 14px;
 }
+
 
 /* team member area */
 
@@ -1292,6 +1308,7 @@ table.dbkit-table tr td {
     margin: 15px 0;
 }
 
+
 /*-------------------- END Dashboard Two ------------------- */
 
 
@@ -1332,7 +1349,7 @@ table.dbkit-table tr td {
     margin-right: 20px;
     vertical-align: middle;
     -webkit-transform: translateY(-5px);
-            transform: translateY(-5px);
+    transform: translateY(-5px);
     display: inline-block;
 }
 
@@ -1347,11 +1364,13 @@ table.dbkit-table tr td {
     max-width: 200px;
 }
 
+
 /* socialads */
 
 .highcharts-credits {
     display: none;
 }
+
 
 /* user-statistics */
 
@@ -1359,11 +1378,13 @@ table.dbkit-table tr td {
     height: 350px;
 }
 
+
 /* salesanalytic */
 
 #salesanalytic {
     height: 500px;
 }
+
 
 /* timeline */
 
@@ -1574,6 +1595,7 @@ table.dbkit-table tr td {
     background: #f7cb3f;
 }
 
+
 /*-------------------- END Dashboard Three ------------------- */
 
 
@@ -1592,6 +1614,7 @@ table.dbkit-table tr td {
     display: none!important;
 }
 
+
 /*-------------------- END Bar Chart ------------------- */
 
 
@@ -1604,7 +1627,6 @@ table.dbkit-table tr td {
 #amlinechart5 {
     height: 400px;
 }
-
 
 
 /*-------------------- END Line Chart ------------------- */
@@ -1622,7 +1644,9 @@ table.dbkit-table tr td {
     width: 100%;
 }
 
+
 /*-------------------- END Pie Chart ------------------- */
+
 
 /*-------------------- 8. Accroding ------------------- */
 
@@ -1678,7 +1702,6 @@ table.dbkit-table tr td {
 }
 
 
-
 /* accordion-3 */
 
 .accordion-s3 .card-header a.collapsed:before {
@@ -1703,6 +1726,7 @@ table.dbkit-table tr td {
 .gradiant-bg .card-header a:before {
     color: #fff;
 }
+
 
 /*-------------------- END Accroding ------------------- */
 
@@ -1757,6 +1781,7 @@ table.dbkit-table tr td {
     color: #d6a20c;
 }
 
+
 /* additional content */
 
 .alert-heading {
@@ -1772,6 +1797,7 @@ table.dbkit-table tr td {
     outline: none;
     font-size: 13px;
 }
+
 
 /*-------------------- END Alert------------------- */
 
@@ -1810,6 +1836,7 @@ table.dbkit-table tr td {
     line-height: 19px;
 }
 
+
 /*-------------------- END Badge------------------- */
 
 
@@ -1823,7 +1850,9 @@ table.dbkit-table tr td {
     border-radius: 50px;
 }
 
+
 /*-------------------- END Button ------------------- */
+
 
 /*-------------------- 12. Cards ------------------- */
 
@@ -1841,6 +1870,7 @@ p.card-text {
     margin-bottom: 23px;
 }
 
+
 /*-------------------- END Cards ------------------- */
 
 
@@ -1853,6 +1883,7 @@ p.card-text {
 .dropdown-item {
     font-size: 14px;
 }
+
 
 /*-------------------- END Dropdown Button ------------------- */
 
@@ -1883,6 +1914,7 @@ p.card-text {
     max-width: 100%;
 }
 
+
 /*-------------------- END Modal ------------------- */
 
 
@@ -1895,6 +1927,7 @@ p.card-text {
 .pagination li a {
     font-family: 'lato', sans-serif;
 }
+
 
 /*-------------------- END Pagination ------------------- */
 
@@ -1980,6 +2013,7 @@ label {
     margin-top: 2px;
 }
 
+
 /*-------------------- END Form ------------------- */
 
 
@@ -2004,7 +2038,6 @@ label {
 }
 
 
-
 /* icon-container */
 
 .icon-section {
@@ -2012,13 +2045,13 @@ label {
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
+    flex-wrap: wrap;
 }
 
 .icon-container {
     cursor: pointer;
     -ms-flex-preferred-size: calc(100% * (1/4));
-        flex-basis: calc(100% * (1/4));
+    flex-basis: calc(100% * (1/4));
 }
 
 .icon-container [class^="ti-"] {
@@ -2031,9 +2064,9 @@ label {
 
 .icon-container:hover [class^="ti-"] {
     -webkit-transform: scale(2);
-            transform: scale(2);
+    transform: scale(2);
     -webkit-transform-origin: left center;
-            transform-origin: left center;
+    transform-origin: left center;
 }
 
 .icon-container span.icon-name {
@@ -2047,12 +2080,13 @@ label {
 
 .icon-container:hover span.icon-name {
     -webkit-transform: translateX(10px);
-            transform: translateX(10px);
+    transform: translateX(10px);
 }
 
 .icon-container:hover span {
     color: #007BFF;
 }
+
 
 /*-------------------- END Icons ------------------- */
 
@@ -2090,6 +2124,7 @@ table tr td [class^="ti-"] {
     vertical-align: middle;
 }
 
+
 /*-------------------- END Table Basic ------------------- */
 
 
@@ -2099,6 +2134,7 @@ div.dataTables_wrapper div.dataTables_length select {
     width: 76px;
     margin: 0 10px;
 }
+
 
 /* datatable-primary */
 
@@ -2153,7 +2189,6 @@ table.dataTable thead td {
 }
 
 
-
 /* datatable-dark */
 
 .datatable-dark thead {
@@ -2186,6 +2221,7 @@ table.dataTable thead td {
     border-color: #999;
 }
 
+
 /*-------------------- END Datatable ------------------- */
 
 
@@ -2204,7 +2240,9 @@ table.dataTable thead td {
     height: 600px;
 }
 
+
 /*-------------------- END Map Start ------------------- */
+
 
 /*-------------------- 22. Invoice ------------------- */
 
@@ -2287,6 +2325,7 @@ table.dataTable thead td {
 .invoice-buttons a:hover {
     background: #574494;
 }
+
 
 /*-------------------- END Invoice ------------------- */
 
@@ -2465,6 +2504,7 @@ table.dataTable thead td {
     margin-left: 5px;
 }
 
+
 /* login-s2 */
 
 .login-s2 {
@@ -2498,6 +2538,7 @@ table.dataTable thead td {
     color: #444;
 }
 
+
 /* login-s3 */
 
 .login-bg {
@@ -2519,7 +2560,6 @@ table.dataTable thead td {
 }
 
 
-
 /* register 4 page */
 
 .login-box-s2 {
@@ -2537,6 +2577,7 @@ table.dataTable thead td {
     width: 100%;
     max-width: 500px;
 }
+
 
 /*-------------------- END Login ------------------- */
 
@@ -2599,6 +2640,7 @@ table.dataTable thead td {
     box-shadow: 0 3px 25px rgba(27, 27, 27, 0.38);
 }
 
+
 /*-------------------- END Pricing ------------------- */
 
 
@@ -2645,6 +2687,7 @@ table.dataTable thead td {
     border-radius: 3px;
 }
 
+
 /*-------------------- END 404 Page ------------------- */
 
 
@@ -2683,7 +2726,7 @@ table.dataTable thead td {
 
 .offset-close:hover {
     -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
+    transform: rotate(90deg);
 }
 
 .offset-menu-tab {
@@ -2791,7 +2834,7 @@ table.dataTable thead td {
 .s-swtich input:checked+label:after {
     left: calc(100% - 5px);
     -webkit-transform: translateX(-100%);
-            transform: translateX(-100%);
+    transform: translateX(-100%);
 }
 
 .s-swtich label:active:after {
@@ -2812,13 +2855,13 @@ table.dataTable thead td {
     display: -ms-flexbox;
     display: flex;
     -webkit-box-pack: justify;
-        -ms-flex-pack: justify;
-            justify-content: space-between;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
     -ms-flex-wrap: nowrap;
-        flex-wrap: nowrap;
+    flex-wrap: nowrap;
     -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    -ms-flex-align: center;
+    align-items: center;
     margin-bottom: 20px;
 }
 
@@ -2826,5 +2869,6 @@ table.dataTable thead td {
     font-size: 16px;
     color: #555;
 }
+
 
 /*-------------------- END Offset Sidebar ------------------- */
