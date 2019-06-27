@@ -1,7 +1,3 @@
-$(document).ready(function() {
-    alert("I am an alert box2!");
-});
-
 //Jquery stuff
 $('#csvFileInput').on('change', function() {
     //get the file name
