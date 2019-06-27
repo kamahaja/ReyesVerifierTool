@@ -148,9 +148,16 @@ class Validator:
         return True
 
     def verifyFile(self):
+        if self.fileType.lower() not in self.fileName.lower():   
+            if self.fileType == "Static Percentages":
+                if ("static_percentage" or "static percentage") in self.fileName.lower():
+                    return True
+            self.message += "File Type and File Name do not match! Try again"
+            return False
+
         if (self.dict == None or self.checkLabels() == False):
             return False
-        
+
         valid = True
         #loop through the column parameters
         for index, (key, value) in enumerate(self.settings[self.fileType].items()):
