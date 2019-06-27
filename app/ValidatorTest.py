@@ -153,13 +153,14 @@ class Validator:
                 if ("static_percentage" or "static percentage") in self.fileName.lower():
                     return True
             self.message = ""
-            self.message += "File type and file name do not match! Try again"
+            self.message += self.fileName + " is not a(n) " + self.fileType + " file! Try again"
             return False
+        else:
+            return True
 
     def verifyFile(self):
-        self.compareFileNameandType()
 
-        if (self.dict == None or self.checkLabels() == False):
+        if (self.compareFileNameandType() == False or self.dict == None or self.checkLabels() == False):
             return False
 
         valid = True
