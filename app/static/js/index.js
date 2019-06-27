@@ -1,3 +1,8 @@
+$(document).ready(function() {
+    reset();
+    resetInput();
+});
+
 //Jquery stuff
 $('#csvFileInput').on('change', function() {
     //get the file name
