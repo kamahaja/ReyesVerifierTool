@@ -28,9 +28,29 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- MY CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/misc.css') }}">
+
+    <style>
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+        
+        td, th {
+          border: 1px solid;
+          text-align: left;
+          padding: 8px;
+        }
+        
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+        </style>
 </head>
 
 <body>
+
+    
     <!--[if lt IE 8]>
       <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
       <![endif]-->
@@ -100,13 +120,20 @@
             </div>
             <!-- page title area end -->
             <div class="main-content-inner">
+                <h1>VERIFIED FILES</h1> 
                 <br>
-                <br>
-                <h1>VERIFIED FILES</h1>
-
+                <h4>Filter by file type</h4>
+                <select id="mylist" onchange="myFunction()" class='form-control'>
+                        <option>Inventory</option>
+                        <option>Sales</option>
+                        <option>Payroll</option>
+                        <option>Static Percentages</option>
+                        </select>
+                <br>        
                 {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {% autoescape false %} {{ message }} {% endautoescape %} {% endfor %} {% endif %} {% endwith %}
-            </div>
-        </div>
+                
+                
+
 
         <!-- main content area end -->
         <!-- footer area start-->
