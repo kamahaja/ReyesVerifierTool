@@ -159,6 +159,8 @@
         <!-- footer area end-->
     </div>
     <!-- page container area end -->
+    <!-- Bunch of include statements -->
+    <!-- #region -->
     <script>
         var request_url = '{{ request.url }}';
     </script>
@@ -194,6 +196,7 @@
     <!-- others plugins -->
     <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+    <!--#endregion-->
 </body>
 
 </html>

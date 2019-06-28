@@ -45,7 +45,7 @@ def dateUploaded(fileName):
 
     myTime = datetime.strptime(raw_date, "%Y%m%d-%H%M%S")
 
-    return myTime.strftime("%B %d, %Y -- %H:%M:%S")
+    return myTime.strftime("%m/%d/%Y -- %H:%M:%S")
     
 
 #view functions go here
@@ -66,7 +66,7 @@ def index():
 
         print(filename)
         verifier = vdt.Validator(filename, fileType, JSON_FILE_PATH)
-        
+
         raw_name = os.path.splitext(filename)[0]
 
         #create end string
@@ -110,15 +110,21 @@ def getCoID(fileName):
 @app.route('/history')
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
-    newList = []
+    output=""
     for file in listOfFiles:
         raw_name = stripExtension(file)
         raw_name = stripDate(raw_name)
         fileType = getFileType(raw_name)
-        coID = getCoID(raw_name)      
-        newList.append([raw_name, fileType, coID, dateUploaded(file)])
-    listTable = tabulate(newList, headers= ['File','Type','CompanyID','Upload Date and time'],tablefmt='html')
-    flash(listTable)
+        coID = getCoID(raw_name)
+        date = dateUploaded(file)
+        print("adding a row to output for file: " + file)
+        output = ("<tr><td><a href= '/uploads/VERIFIED_FILES/" + file + "'>" + raw_name + "</a></td>" +
+        "<td>" + coID + "</td>" +
+        "<td>" + fileType + "</td>" + 
+        "<td>Bobby Jones the Third</td>" + 
+        "<td>" + date + "</td>" + 
+        "</tr>")
+        flash(output)
     
     return render_template('history.html')
 
