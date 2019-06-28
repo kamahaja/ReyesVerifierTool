@@ -4,6 +4,7 @@ from flask import render_template, request, flash, redirect, make_response, json
 from werkzeug.utils import secure_filename
 from shutil import copyfile
 from datetime import datetime
+from tabulate import tabulate
 import json
 import time
 import os
@@ -88,13 +89,36 @@ def index():
         
     return render_template('index.html')
 
+def getFileType(fileName):
+    if "sales" in fileName.lower():
+        return "Sales"
+    if "payroll" in fileName.lower():
+        return "Payroll"
+    if "sales" in fileName.lower():
+        return "Sales"
+    if "static percentage" or "static_percentage" in fileName.lower():
+        return "Static Percentages"
+
+def getCoID(fileName):
+    if "FDC" in fileName:
+        return "FDC"
+    if "FGC" in fileName:
+        return "FGC"
+    if "HJL" in fileName:
+        return 'HJL'
+
 @app.route('/history')
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
+    newList = []
     for file in listOfFiles:
         raw_name = stripExtension(file)
         raw_name = stripDate(raw_name)
-        flash("<div class='card border border-info bg-light text-black mb-3'><div class='card-body'><h5 class='card-title'>" + raw_name + "</h5><p class='card-text'>Verified on " + dateUploaded(file) + ".</p><a href= '/uploads/VERIFIED_FILES/" + file + "'>Download</a></div></div>")
+        fileType = getFileType(raw_name)
+        coID = getCoID(raw_name)      
+        newList.append([raw_name, fileType, coID, dateUploaded(file)])
+    listTable = tabulate(newList, headers= ['File','Type','CompanyID','Upload Date and time'],tablefmt='html')
+    flash(listTable)
     
     return render_template('history.html')
 
