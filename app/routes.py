@@ -45,8 +45,8 @@ def dateUploaded(fileName):
 
     myTime = datetime.strptime(raw_date, "%Y%m%d-%H%M%S")
 
-    return myTime.strftime("%B %d, %Y -- %H:%M:%S")
-    
+    #return myTime.strftime("%B %d, %Y -- %H:%M:%S")
+    return myTime.strftime("%m/%d/%Y -- %H:%M:%S")
 
 #view functions go here
 
