@@ -45,8 +45,9 @@ def dateUploaded(fileName):
 
     myTime = datetime.strptime(raw_date, "%Y%m%d-%H%M%S")
 
-    #return myTime.strftime("%B %d, %Y -- %H:%M:%S")
     return myTime.strftime("%m/%d/%Y -- %H:%M:%S")
+    
+
 
 #view functions go here
 
@@ -66,7 +67,7 @@ def index():
 
         print(filename)
         verifier = vdt.Validator(filename, fileType, JSON_FILE_PATH)
-        
+
         raw_name = os.path.splitext(filename)[0]
 
         #create end string
