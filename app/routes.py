@@ -121,7 +121,7 @@ def history():
         output = ("<tr><td><a href= '/uploads/VERIFIED_FILES/" + file + "'>" + raw_name + "</a></td>" +
         "<td>" + coID + "</td>" +
         "<td>" + fileType + "</td>" + 
-        "<td>Bobby Jones the Third</td>" + 
+        "<td>User</td>" + 
         "<td>" + date + "</td>" + 
         "</tr>")
         flash(output)
