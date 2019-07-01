@@ -48,6 +48,7 @@ def dateUploaded(fileName):
     return myTime.strftime("%m/%d/%Y -- %H:%M:%S")
     
 
+
 #view functions go here
 
 @app.route('/', methods = ["GET", "POST"])
@@ -117,11 +118,10 @@ def history():
         fileType = getFileType(raw_name)
         coID = getCoID(raw_name)
         date = dateUploaded(file)
-        print("adding a row to output for file: " + file)
         output = ("<tr><td><a href= '/uploads/VERIFIED_FILES/" + file + "'>" + raw_name + "</a></td>" +
         "<td>" + coID + "</td>" +
         "<td>" + fileType + "</td>" + 
-        "<td>Bobby Jones the Third</td>" + 
+        "<td>User</td>" + 
         "<td>" + date + "</td>" + 
         "</tr>")
         flash(output)
