@@ -28,24 +28,46 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
     <!-- MY CSS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/misc.css') }}">
-
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        table {
-          font-family: arial, sans-serif;
-          border-collapse: collapse;
-          width: 100%;
+       
+        * {
+            box-sizing: border-box;
         }
-        
-        td, th {
-          border: 1px solid;
-          text-align: left;
-          padding: 8px;
-        }
-        
-        tr:nth-child(even) {
-          background-color: #dddddd;
-        }
-        </style>
+    #myInput {
+        background-image: url('/css/searchicon.png'); /* Add a search icon to input */
+        background-position: 10px 12px; /* Position the search icon */
+        background-repeat: no-repeat; /* Do not repeat the icon image */
+        width: 100%; /* Full-width */
+        font-size: 16px; /* Increase font-size */
+        padding: 12px 20px 12px 40px; /* Add some padding */
+        border: 1px solid #ddd; /* Add a grey border */
+        margin-bottom: 12px; /* Add some space below the input */
+      }
+      
+      #example {
+        border-collapse: collapse; /* Collapse borders */
+        width: 100%; /* Full-width */
+        border: 1px solid #ddd; /* Add a grey border */
+        font-size: 18px; /* Increase font-size */
+      }
+      
+      #example th, #example td {
+        text-align: left; /* Left-align text */
+        padding: 12px; /* Add padding */
+      }
+      
+      #example tr {
+        /* Add a bottom border to all table rows */
+        border-bottom: 1px solid #ddd; 
+      }
+      
+      #example tr.header, #example tr:hover {
+        /* Add a grey background color to the table header and on hover */
+        background-color: #f1f1f1;
+      }
+    </style>
+
 </head>
 
 <body>
@@ -122,16 +144,31 @@
             <div class="main-content-inner">
                 <h1>VERIFIED FILES</h1> 
                 <br>
-                <h4>Filter by file type</h4>
-                <select id="mylist" onchange="myFunction()" class='form-control'>
-                        <option>Inventory</option>
-                        <option>Sales</option>
-                        <option>Payroll</option>
-                        <option>Static Percentages</option>
-                        </select>
-                <br>        
-                {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {% autoescape false %} {{ message }} {% endautoescape %} {% endfor %} {% endif %} {% endwith %}
-                
+                <input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search">
+                <table id="example" class="table table-striped table-bordered" style="width:100%">
+                        <thead>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Company</th>
+                                <th>File Type</th>
+                                <th>Uploader</th>
+                                <th>Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {% autoescape false %} {{ message }} {% endautoescape %} {% endfor %} {% endif %} {% endwith %}
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>File Name</th>
+                                <th>Company</th>
+                                <th>File Type</th>
+                                <th>Uploader</th>
+                                <th>Date</th>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
                 
 
 
@@ -144,6 +181,8 @@
         </footer>
         <!-- footer area end-->
     </div>
+
+    
     <!-- page container area end -->
     <!-- jquery latest version -->
     <script src="{{ url_for('static', filename='js/vendor/jquery-2.2.4.min.js') }}"></script>
@@ -178,6 +217,31 @@
     <!-- others plugins -->
     <script src="{{ url_for('static', filename='js/plugins.js') }}"></script>
     <script src="{{ url_for('static', filename='js/scripts.js') }}"></script>
+
+    <script>
+            function myFunction() {
+              // Declare variables 
+              var input, filter, table, tr, td, i, txtValue;
+              input = document.getElementById("myInput");
+              filter = input.value.toUpperCase();
+              table = document.getElementById("example");
+              tr = table.getElementsByTagName("tr");
+            
+              // Loop through all table rows, and hide those who don't match the search query
+              for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                  txtValue = td.textContent || td.innerText;
+                  if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                  } else {
+                    tr[i].style.display = "none";
+                  }
+                } 
+              }
+            }
+            </script>
+
 </body>
 
 </html>
