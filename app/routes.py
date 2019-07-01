@@ -117,7 +117,6 @@ def history():
         fileType = getFileType(raw_name)
         coID = getCoID(raw_name)
         date = dateUploaded(file)
-        print("adding a row to output for file: " + file)
         output = ("<tr><td><a href= '/uploads/VERIFIED_FILES/" + file + "'>" + raw_name + "</a></td>" +
         "<td>" + coID + "</td>" +
         "<td>" + fileType + "</td>" + 
