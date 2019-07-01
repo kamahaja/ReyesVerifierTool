@@ -1,4 +1,4 @@
-# ReyesVerifier - Web
+# ReyesVerifierTool
 
 Data verification tool for Reyes Beverage Group
 
