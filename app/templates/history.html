@@ -158,15 +158,7 @@
                         <tbody>
                             {% with messages = get_flashed_messages() %} {% if messages %} {% for message in messages %} {% autoescape false %} {{ message }} {% endautoescape %} {% endfor %} {% endif %} {% endwith %}
                         </tbody>
-                        <tfoot>
-                            <tr>
-                                <th>File Name</th>
-                                <th>Company</th>
-                                <th>File Type</th>
-                                <th>Uploader</th>
-                                <th>Date</th>
-                            </tr>
-                        </tfoot>
+                        
                     </table>
                 </div>
                 
