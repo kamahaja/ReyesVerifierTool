@@ -26,7 +26,7 @@
         },
         "BREAKAGE_AMT": {
             "type": "float",
-            "format": "-1.0"
+            "format": "-1"
         },
         "OVERAGE_QTY": {
             "type": "int",
@@ -55,8 +55,8 @@
             "format": "1.0"
         },
         "Stops": {
-            "type": "int",
-            "format": "1"
+            "type": "float",
+            "format": "1.0"
         },
         "GP Dollars": {
             "type": "float",
@@ -122,5 +122,6 @@
             "type": "percentage",
             "format": "none"
         }
-    }
+    },
+    "reyesPath": "//SQBIDINSQLW001/DataSources/PlanData/VERIFIED_FILES/"
 }

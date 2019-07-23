@@ -1,13 +1,16 @@
 from app import app
 from app import ValidatorTest as vdt
-from flask import render_template, request, flash, redirect, make_response, jsonify, session, url_for, send_from_directory, send_file
+from flask import Flask, render_template, render_template_string, request, flash, redirect, make_response, jsonify, session, url_for, send_from_directory, send_file
+from ldap3 import Server, Connection, ALL, NTLM
+from flask_ldap3_login import LDAP3LoginManager
+from flask_login import LoginManager, login_user, UserMixin, current_user
+from flask_ldap3_login.forms import LDAPLoginForm
 from werkzeug.utils import secure_filename
 from shutil import copyfile
 from datetime import datetime
-from tabulate import tabulate
 import json
 import time
-import os
+import os, os.path
 
 # GOAL FOR 6/27
 # create VerifiedFile class to store the date uploaded of each file on creation
@@ -23,6 +26,12 @@ VERIFIED_FILE_PATH = os.path.join(APP_ROOT, 'VERIFIED_FILES')
 
 JSON_FILE_PATH = "app/formatSettings.json"
 
+with open(JSON_FILE_PATH) as json_file:
+    directorySettings = json.load(json_file)
+    reyesPath = directorySettings['reyesPath']
+
+USER_UPLOADING = "Some User"
+
 def numPreviousUploads(fileName):
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
     count = 0
@@ -32,11 +41,28 @@ def numPreviousUploads(fileName):
 
     return count
 
-def stripExtension(fileName):
-    return os.path.splitext(fileName)[0]
+def stripExtension(fileNameWithExt):
+    return os.path.splitext(fileNameWithExt)[0]
 
-def stripDate(fileNameWithDate):
-    return fileNameWithDate.rsplit("_", 1)[0]
+def stripDate(fileName):
+    return fileName.rsplit("_", 1)[0]
+
+def getUsername(fileName):
+    rawName = stripExtension(fileName)
+    rawName = stripDate(rawName)
+
+    username = rawName.rsplit("_", 1)[1]
+
+    if len(username) == 0:
+        return "Some User"
+    else:
+        return username
+    
+
+def getRawName(fileName):
+    rawName = stripExtension(fileName)
+    rawName = stripDate(rawName)
+    return rawName.rsplit("_", 1)[0]
 
 def dateUploaded(fileName):
     raw_name = stripExtension(fileName)
@@ -48,30 +74,33 @@ def dateUploaded(fileName):
     return myTime.strftime("%m/%d/%Y -- %H:%M:%S")
     
 
-
 #view functions go here
+
+
 
 @app.route('/', methods = ["GET", "POST"])
 @app.route('/index', methods = ["GET", "POST"])
 def index():
+    
+
     if request.method == "POST":
 
         file = request.files["file"]
         fileType = request.form.get("fileTypeData")
+        username = request.form.get("usernameData")
 
-        print("File uploaded")
-        print(file)
+
 
         filename = secure_filename(file.filename)
         file.save(filename)
 
-        print(filename)
         verifier = vdt.Validator(filename, fileType, JSON_FILE_PATH)
 
         raw_name = os.path.splitext(filename)[0]
 
         #create end string
-        output = verifier.verifyFileToStr()
+        output = " Username: " + username + "<br>"
+        output += verifier.verifyFileToStr()
         if (numPreviousUploads(raw_name) > 0):
             output += "<br>" + filename + " has " + str(numPreviousUploads(raw_name)) + " previously verified version(s). Check the history tab to view/download previous versions."
         else:
@@ -80,8 +109,10 @@ def index():
         verified = verifier.verifyFile()
         #raw_name + time.strftime("%Y%m%d-%H%M%S") + ".csv"
         if (verified == True):
-            copyfile(filename, VERIFIED_FILE_PATH + "/" + raw_name + "_" + time.strftime("%Y%m%d-%H%M%S") + ".csv")
-
+            localName = raw_name + "_" + username + "_" + time.strftime("%Y%m%d-%H%M%S") + ".csv"
+            copyfile(filename, VERIFIED_FILE_PATH + "/" + localName)
+            copyfile(VERIFIED_FILE_PATH + '/' + localName, reyesPath + raw_name + '.csv')
+                
         os.remove(filename)
         
         res = make_response(jsonify({"message": output, "valid": verified}), 200)
@@ -101,27 +132,22 @@ def getFileType(fileName):
         return "Static Percentages"
 
 def getCoID(fileName):
-    if "FDC" in fileName:
-        return "FDC"
-    if "FGC" in fileName:
-        return "FGC"
-    if "HJL" in fileName:
-        return 'HJL'
+    return fileName[0:3]
 
 @app.route('/history')
 def history():
     listOfFiles = os.listdir(VERIFIED_FILE_PATH)
-    output=""
+    output="" 
     for file in listOfFiles:
-        raw_name = stripExtension(file)
-        raw_name = stripDate(raw_name)
+        raw_name = getRawName(file)
         fileType = getFileType(raw_name)
         coID = getCoID(raw_name)
         date = dateUploaded(file)
+        username = getUsername(file)
         output = ("<tr><td><a href= '/uploads/VERIFIED_FILES/" + file + "'>" + raw_name + "</a></td>" +
-        "<td>" + coID + "</td>" +
+        "<td>" + coID + "</td>" + 
         "<td>" + fileType + "</td>" + 
-        "<td>User</td>" + 
+        "<td>" + username + "</td>" + 
         "<td>" + date + "</td>" + 
         "</tr>")
         flash(output)

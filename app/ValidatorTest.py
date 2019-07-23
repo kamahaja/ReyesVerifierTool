@@ -3,6 +3,9 @@ import numpy as np
 import datetime
 import io
 import json
+import pyodbc
+from os import path
+import os
 
 class Validator:    
     def __init__(self, fileName, fileType, settingsPath):
@@ -12,6 +15,7 @@ class Validator:
         self.SETTINGS_FILE = settingsPath
         self.dict = dict()
         self.message = ""
+        self.companies = []
 
         self.parseJSON()
         self.parseCSV()
@@ -20,9 +24,11 @@ class Validator:
          with open(self.SETTINGS_FILE) as json_file:  
             self.settings = json.load(json_file)
 
+
     def parseCSV(self):
         df = pd.read_csv(self.fileName, dtype='str') #we want strings because some are not ints
         df.columns = df.columns.str.strip()
+        df = df.loc[:, ~df.columns.str.contains('^Unnamed')]
         if df.isnull().values.any():  #if there are empty cells it will not work
             df1 = df[df.isna().any(axis=1)].index
             self.message += "There are empty cells on row(s): "
@@ -31,11 +37,34 @@ class Validator:
             self.dict = None
             return
         self.dict = df.to_dict(orient='list')
+
+    def getValidCoIDs(self):
+        connection = pyodbc.connect('Driver={ODBC Driver 17 for SQL Server};'
+                                        'Server=sdbidinazsdbsx002.database.windows.net;'
+                                        'Database=RBG_DM;'
+                                        'uid=kmahajan@reyesholdings.com;pwd=Welcome9399!;'
+                                        "authentication=ActiveDirectoryPassword;")
+        cursor = connection.cursor()
+
+        SQLCommand = ("SELECT DSR_SALES_ORG_ID FROM RBD.D_SALES_ORG_EXT")
+
+        cursor.execute(SQLCommand)
+        companies = []
+
+        for row in cursor.fetchall():
+            #print(row[1])
+            companies.append(row[0])
+
+
+        connection.close()
+        self.companies = companies
+      
+        return companies
     
     def checkLabels(self):    
         valid = True
+       
         for validType in self.settings.keys():
-            print(validType)
             if self.fileType.lower() == validType.lower():
                 valid = list(self.dict.keys()) == list(self.settings[validType].keys())
         
@@ -43,10 +72,12 @@ class Validator:
             self.message += "The labels are not valid for filetype " + self.fileType + "! Check if some columns are swapped or a label is misspelled."
         return valid
 
-    def validateDateFormat(self, date_text):
+    def validateDateFormat(self, date_text, date_format):
         try:
-            datetime.datetime.strptime(date_text, '%m/%d/%Y')
+            datetime.datetime.strptime(date_text, date_format)
+            
             return True
+        
         except ValueError:
             return False
             #raise ValueError("Incorrect data format, should be MM-DD-YYYY")
@@ -75,13 +106,29 @@ class Validator:
             return False
         except ValueError:
             return True
-            
+    
+    def checkEdgeCases(self):
+        fileLines = []
+        with open(self.fileName, 'r') as my_file:
+            for index,line in enumerate(my_file):
+                if line in fileLines:
+                    for row in fileLines:
+                        if row == line:
+                            firstOccurence = fileLines.index(row)
+                            self.message = ''
+                            self.message += "Duplicate rows - Rows " + str(firstOccurence+1) + " and " + (str(index+1)) 
+                    return False
+                else:
+                    fileLines.append(line)
+
     def checkColInteger(self, key, token):
         col = list(self.dict.keys()).index(key)
         values = self.dict[key]
         for index, raw_value in enumerate(values):
             value = raw_value.replace(',','')
-            if value.isdigit() == False:
+            try:
+                int(value)
+            except ValueError:
                 self.message += "Not a valid integer on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
             
@@ -91,7 +138,7 @@ class Validator:
                     return False
             elif token < 0:
                 if int(value) > 0:
-                    self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col+1) + ": " + value + "<br>"
+                    self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col+1) + ": " + " (" + key +"): " + value + "<br>"
                     return False
 
         return True
@@ -107,22 +154,32 @@ class Validator:
             
             if token > 0:
                 if float(value) < 0:
+                    self.message = ''
                     self.message += "Number less than 0 on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                     return False
             elif token < 0:
                 if float(value) > 0:
+                    self.message = ''
                     self.message += "Number greater than 0 on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                     return False
 
         return True
     
-    def checkColIsString(self, key):
+    def checkColIsString(self, key, format):
         col = list(self.dict.keys()).index(key)
         values = self.dict[key]
         for index, value in enumerate(values):
             if self.hasNumber(value):
                 self.message += "Not a valid string on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
+
+        if (format == "companys"):
+            validCos = self.getValidCoIDs()
+            for index, value in enumerate(values):
+                if value not in validCos:
+                    self.message = ''
+                    self.message += "Not a valid company ID on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
+                    return False
         
         return True
 
@@ -137,12 +194,18 @@ class Validator:
 
         return True
 
-    def checkColDates(self, key):
+    def checkColDates(self, key, date_format):
         col = list(self.dict.keys()).index(key)
         values = self.dict[key]
+        now = datetime.datetime.now()
         for index, value in enumerate(values):
-            if self.validateDateFormat(value) == False:
+            if self.validateDateFormat(value, date_format) == False:
+                self.message = ''
                 self.message += "Not a date on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
+                return False
+            if str(now.year) != value[-4:] :
+                self.message = ''
+                self.message += "Date does not have the current year on row " + str(index + 2) + " col " + str(col+1) + " (" + key +"): " + value + "<br>"
                 return False
 
         return True
@@ -160,42 +223,59 @@ class Validator:
 
     def verifyFile(self):
 
-        if (self.compareFileNameandType() == False or self.dict == None or self.checkLabels() == False):
+        if (self.compareFileNameandType() == False or self.dict == None or self.checkLabels() == False or self.checkEdgeCases() == False):
             return False
 
-        valid = True
+        
+        if (self.checkLabels() == True):
+        
+            for label in self.dict.keys():
+                if label == 'CostCtr':
+                    col = list(self.dict.keys()).index(label)
+                    for index,val in enumerate(self.dict['CostCtr']):
+                        try:
+                            int(val)
+                        except ValueError:
+                            self.message = ''
+                            self.message += "Not a valid integer on row " + str(index + 2) + " col " + str(col+1) + " (" + label +"): " + val + "<br>"
+                            return False
+                        if int(val) < 1000 or int(val) > 9999:
+                            self.message += "Not a valid CostCtr on row " + str(index + 2) + " col " + str(col+1) + " (" + label + " has to be between 1000 and 9999" + "): " + val + "<br>"
+                            return False
+
         #loop through the column parameters
         for index, (key, value) in enumerate(self.settings[self.fileType].items()):
-            print(value['type'] + " in col " + str(index))
+            #print(value['type'] + " in col " + str(index))
             if (value['type'] == "string"):
-                if (self.checkColIsString(key) == False):
+                if (self.checkColIsString(key, value['format']) == False):
                     print("There is an issue with dates in col " + str(index))
-                    valid = False
+                    return False
             if (value['type'] == "int"):
                 if (self.checkColInteger(key, int(value['format'])) == False):
                     print("There is an issue with integers in col " + str(index))
-                    valid = False
+                    return False
             if (value['type'] == "float"):
                 if (self.checkColFloat(key, float(value['format'])) == False):
                     print("There is an issue in col " + str(index))
-                    valid = False
+                    return False
             if (value['type'] == "date"):
-                if (self.checkColDates(key) == False):
+                if (self.checkColDates(key, value['format']) == False):
                     print("There is an issue in col " + str(index))
-                    valid = False
+                    return False
             if (value['type'] == "percentage"):
                 if (self.checkColIsPercentage(key) == False):
                     print("There is an issue in col " + str(index))
-                    valid = False
-
-        return valid
+                    return False
+            
+        return True
                 
 
     def verifyFileToStr(self):
-        print("Verifying " + self.fileName + " as filetype " + self.fileType)
+        
         if self.verifyFile() == True:
             return self.fileName + " is valid! Uploaded to /VERIFIED_FILES"
         else:
             return self.fileName + ": <br>" + self.message
         
-
+      
+    

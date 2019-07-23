@@ -3,7 +3,12 @@ $(document).ready(function() {
     resetInput();
 });
 
-//Jquery stuff
+$("#exampleInputEmail1").change(function(e) {
+    e.preventDefault();
+
+    $("input#usernameHidden").val($(this).val())
+});
+
 $('#csvFileInput').on('change', function() {
     //get the file name
     var pathwithfilename = $(this).val();
@@ -15,6 +20,18 @@ $('#csvFileInput').on('change', function() {
 $('.dropdown-menu a').click(function() {
     $('#selected').text($(this).text());
     $('input#selectedHidden').val($(this).text());
+
+    selec = $(this).text();
+
+    if (selec == "Sales") {
+        $('#formatPrompt').text("Filename should be of format xxx_Sales.csv");
+    } else if (selec == "Payroll") {
+        $('#formatPrompt').text("Filename should be of format xxx_Payroll.csv");
+    } else if (selec == "Inventory") {
+        $('#formatPrompt').text("Filename should be of format xxx_Inventory.csv");
+    } else if (selec == "Static Percentages") {
+        $('#formatPrompt').text("Filename should be of format xxx_Static_Percentage.csv");
+    }
 });
 
 $('#fileForm').submit(function(event) {
@@ -118,6 +135,7 @@ function upload(url) {
 
     value = $("#selectedHidden").val();
     data.append("fileTypeData", value)
+    data.append("usernameData", $("#usernameHidden").val())
 
     // request progress handler
     request.upload.addEventListener("progress", function(e) {
@@ -221,5 +239,7 @@ function reset() {
     // Reset file type dropdown button and hidden tracker
     file_type_drop.innerHTML = "File Type";
     file_type_hidden.value = "";
+
+    $('#formatPrompt').text("");
 
 }
